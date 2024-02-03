@@ -1,0 +1,50 @@
+<!-- Content managed by Project Forge, see [projectforge.md] for details. -->
+{% import (
+  "fmt"
+  "strings"
+
+  "github.com/kyleu/dbaudit/app"
+  "github.com/kyleu/dbaudit/app/controller/cutil"
+  "github.com/kyleu/dbaudit/app/util"
+) %}
+
+{% func SVG(k string) %}{%s= util.SVGLibrary[k] %}{% endfunc %}
+
+{% func SVGRef(k string, w int, h int, cls string, ps *cutil.PageState) %}{% stripspace %}
+  {% if k != "" %}
+    {% code
+      ps.AddIcon(k)
+      if w == 0 { w = 20 }
+      if h == 0 { h = 20 }
+      style := fmt.Sprintf("width: %dpx; height: %dpx;", w, h)
+    %}
+    {% if cls == "" %}
+      <svg style="{%s style %}"><use xlink:href="#svg-{%s k %}" /></svg>
+    {% else %}
+      <svg class="{%s cls %}" style="{%s style %}"><use xlink:href="#svg-{%s k %}" /></svg>
+    {% endif %}
+  {% endif %}
+{% endstripspace %}{% endfunc %}
+
+{% func Icon(k string, size int, cls string, ps *cutil.PageState) %}{% stripspace %}
+  {% if strings.Contains(k, "/") %}
+    <img alt="SVG icon [{%s k %}]" src="{%s k %}" style="width: {%d size %}px; height: {%d size %}px;" />
+  {% else %}
+    {%= SVGRef(k, size, size, cls, ps) %}
+  {% endif %}
+{% endstripspace %}{% endfunc %}
+
+{% func SVGRefIcon(k string, ps *cutil.PageState) %}{% stripspace %}
+  {%= SVGRef(k, 20, 20, "icon", ps) %}
+{% endstripspace %}{% endfunc %}
+
+{%- func IconGallery(as *app.State, ps *cutil.PageState) -%}
+  <div class="flex-wrap mt">
+    {%- for _, k := range util.SVGIconKeys -%}
+    <div class="icon-gallery-icon">
+      <div class="gallery-svg">{%= SVGRef(k, 64, 64, "icon", ps) %}</div>
+      <div class="gallery-title">{%s k %}</div>
+    </div>
+    {%- endfor -%}
+  </div>
+{%- endfunc -%}

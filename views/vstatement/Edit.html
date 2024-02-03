@@ -1,0 +1,54 @@
+<!-- Content managed by Project Forge, see [projectforge.md] for details. -->
+{% import (
+  "github.com/kyleu/dbaudit/app"
+  "github.com/kyleu/dbaudit/app/controller/cutil"
+  "github.com/kyleu/dbaudit/app/statement"
+  "github.com/kyleu/dbaudit/app/util"
+  "github.com/kyleu/dbaudit/views/components"
+  "github.com/kyleu/dbaudit/views/components/edit"
+  "github.com/kyleu/dbaudit/views/layout"
+) %}
+
+{% code type Edit struct {
+  layout.Basic
+  Model *statement.Statement
+  IsNew bool
+} %}
+
+{% func (p *Edit) Body(as *app.State, ps *cutil.PageState) %}
+  <div class="card">
+    {%- if p.IsNew -%}
+    <div class="right"><a href="?prototype=random"><button>Random</button></a></div>
+    <h3>{%= components.SVGRefIcon(`database`, ps) %} New Statement</h3>
+    <form action="/statement/_new" class="mt" method="post">
+    {%- else -%}
+    <div class="right"><a href="{%s p.Model.WebPath() %}/delete" onclick="return confirm('Are you sure you wish to delete statement [{%s p.Model.String() %}]?')"><button>Delete</button></a></div>
+    <h3>{%= components.SVGRefIcon(`database`, ps) %} Edit Statement [{%s p.Model.String() %}]</h3>
+    <form action="" method="post">
+    {%- endif -%}
+      <table class="mt expanded">
+        <tbody>
+          {% if p.IsNew %}{%= edit.UUIDTable("id", "", "ID", &p.Model.ID, 5, "UUID in format (00000000-0000-0000-0000-000000000000)") %}{% endif %}
+          {%= edit.IntTable("sessionID", "", "Session ID", p.Model.SessionID, 5, "Integer") %}
+          {%= edit.SelectTable("action", "", "Action", p.Model.Action.Key, statement.AllActions.Keys(), statement.AllActions.Strings(), 5, statement.AllActions.Help()) %}
+          {%= edit.BoolTable("succeeded", "Succeeded", p.Model.Succeeded, 5, "Value [true] or [false]") %}
+          {%= edit.StringTable("principal", "", "Principal", p.Model.Principal, 5, "String text") %}
+          {%= edit.StringTable("database", "", "Database", p.Model.Database, 5, "String text") %}
+          {%= edit.StringTable("filename", "", "Filename", p.Model.Filename, 5, "String text") %}
+          {%= edit.StringTable("host", "", "Host", p.Model.Host, 5, "String text") %}
+          {%= edit.IntTable("transactionID", "", "Transaction ID", p.Model.TransactionID, 5, "Integer") %}
+          {%= edit.StringTable("clientIP", "", "Client IP", p.Model.ClientIP, 5, "String text") %}
+          {%= edit.IntTable("duration", "", "Duration", p.Model.Duration, 5, "Integer") %}
+          {%= edit.UUIDTable("connectionID", "", "Connection ID", &p.Model.ConnectionID, 5, "UUID in format (00000000-0000-0000-0000-000000000000)") %}
+          {%= edit.IntTable("rowsAffected", "", "Rows Affected", p.Model.RowsAffected, 5, "Integer") %}
+          {%= edit.IntTable("rowsReturned", "", "Rows Returned", p.Model.RowsReturned, 5, "Integer") %}
+          {%= edit.TextareaTable("sql", "", "SQL", 8, p.Model.SQL, 5, "String text") %}
+          {%= edit.TextareaTable("types", "", "Types", 8, util.ToJSON(p.Model.Types), 5, "JSON object") %}
+          {%= edit.TextareaTable("values", "", "Values", 8, util.ToJSON(p.Model.Values), 5, "JSON object") %}
+          {%= edit.TimestampTable("occurred", "", "Occurred", &p.Model.Occurred, 5, "Date and time, in almost any format") %}
+          <tr><td colspan="2"><button type="submit">Save Changes</button></td></tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+{% endfunc %}

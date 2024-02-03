@@ -1,0 +1,24 @@
+{
+  "name": "action",
+  "package": "statement",
+  "description": "The possible statement actions",
+  "icon": "star",
+  "values": [
+    {
+      "key": "proc_start",
+      "name": "Procedure Started"
+    },
+    {
+      "key": "proc_complete",
+      "name": "Procedure Complete"
+    },
+    {
+      "key": "healthcheck",
+      "name": "Healthcheck"
+    },
+    {
+      "key": "unknown",
+      "name": "Unknown"
+    }
+  ]
+}

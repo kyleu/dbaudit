@@ -1,0 +1,41 @@
+{
+  "key": "dbaudit",
+  "name": "DB Audit",
+  "icon": "database",
+  "version": "0.0.1",
+  "package": "github.com/kyleu/dbaudit",
+  "port": 55500,
+  "modules": [
+    "core",
+    "database",
+    "databaseui",
+    "docbrowse",
+    "export",
+    "filesystem",
+    "migration",
+    "oauth",
+    "sandbox",
+    "search",
+    "sqlserver",
+    "themecatalog"
+  ],
+  "tags": [
+    "kyleu"
+  ],
+  "info": {
+    "org": "kyleu",
+    "authorID": "kyleu",
+    "authorName": "Kyle U",
+    "authorEmail": "kyle@kyleu.com",
+    "license": "MIT",
+    "homepage": "https://github.com/kyleu/dbaudit",
+    "sourcecode": "https://github.com/kyleu/dbaudit",
+    "summary": "Analyze your SQL Server database audits",
+    "description": "Allows you to visualize the activity on your SQL Server installation"
+  },
+  "build": {
+    "changelog": true,
+    "testsFail": true,
+    "x86": true
+  }
+}

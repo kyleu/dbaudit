@@ -1,0 +1,37 @@
+{% import (
+  "github.com/kyleu/dbaudit/app"
+  "github.com/kyleu/dbaudit/app/controller/cutil"
+  "github.com/kyleu/dbaudit/app/statement"
+  "github.com/kyleu/dbaudit/views/components"
+  "github.com/kyleu/dbaudit/views/layout"
+) %}
+
+{% func RenderPlan(s *statement.Statement, as *app.State, ps *cutil.PageState) %}
+  <div class="card">
+    <h3>{%= components.SVGRefIcon(`star`, ps) %} Query Plan</h3>
+    <div class="mt">
+      <ul>
+        <li><a href="{%s s.WebPath() %}/run">Run Statement</a></li>
+      </ul>
+    </div>
+  </div>
+{% endfunc %}
+
+{% code type Result struct {
+  layout.Basic
+  Statement *statement.Statement
+  Result any
+} %}
+
+{% func (p *Result) Body(as *app.State, ps *cutil.PageState) %}
+  <div class="card">
+    <div class="right">
+      <a href="#modal-statement"><button type="button">JSON</button></a>
+      <a href="{%s p.Statement.WebPath() %}"><button>{%= components.SVGRef("edit", 15, 15, "icon", ps) %}View</button></a>
+    </div>
+    <h3>{%= components.SVGRefIcon(`database`, ps) %} {%s p.Statement.TitleString() %}</h3>
+    {%= components.JSON(p.Result) %}
+    <pre>{%s p.Statement.PlainSQL() %}</pre>
+  </div>
+  {%= components.JSONModal("statement", "Statement JSON", p.Statement, 1) %}
+{% endfunc %}

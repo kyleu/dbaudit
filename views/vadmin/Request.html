@@ -1,0 +1,98 @@
+<!-- Content managed by Project Forge, see [projectforge.md] for details. -->
+{% import (
+  "github.com/samber/lo"
+  "github.com/valyala/fasthttp"
+
+  "github.com/kyleu/dbaudit/app"
+  "github.com/kyleu/dbaudit/app/controller/cutil"
+  "github.com/kyleu/dbaudit/app/util"
+  "github.com/kyleu/dbaudit/views/components"
+  "github.com/kyleu/dbaudit/views/layout"
+) %}
+
+{% code type Request struct {
+  layout.Basic
+  RC *fasthttp.RequestCtx
+} %}
+
+{% func (p *Request) Body(as *app.State, ps *cutil.PageState) %}
+  <div class="card">
+    <div class="right"><a href="#modal-ps"><button type="button">Page State</button></a></div>
+    <h3>Request Debug</h3>
+    <div class="overflow full-width">
+      <table>
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ID</td>
+            <td>{%dul p.RC.ID() %}</td>
+          </tr>
+          <tr>
+            <td>URL</td>
+            <td>{%s p.RC.URI().String() %}</td>
+          </tr>
+          <tr>
+            <td>Protocol</td>
+            <td>{%s string(p.RC.Request.URI().Scheme()) %}</td>
+          </tr>
+          <tr>
+            <td>Host</td>
+            <td>{%s string(p.RC.Request.URI().Host()) %}</td>
+          </tr>
+          <tr>
+            <td>Path</td>
+            <td>{%s string(p.RC.Request.URI().Path()) %}</td>
+          </tr>
+          <tr>
+            <td>Query String</td>
+            <td>{%s string(p.RC.Request.URI().QueryString()) %}</td>
+          </tr>
+          <tr>
+            <td>Body Size</td>
+            <td>{%d len(p.RC.Request.Body()) %}</td>
+          </tr>
+          <tr>
+            <td>Browser</td>
+            <td>{%s ps.Browser %} {%s ps.BrowserVersion %}</td>
+          </tr>
+          <tr>
+            <td>OS</td>
+            <td>{%s ps.OS %} {%s ps.OSVersion %}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {%- if p.RC.Request.Header.Len() > 0 -%}
+  {%- code
+    hd := cutil.RequestHeadersMap(p.RC)
+  -%}
+  <div class="card">
+    <h3>Headers</h3>
+    <div class="overflow full-width">
+      <table>
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for _, k := range util.ArraySorted(lo.Keys(hd)) -%}
+          <tr>
+            <td class="nowrap">{%s k %}</td>
+            <td>{%s hd[k] %}</td>
+          </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {%- endif -%}
+  {%= components.JSONModal("ps", "Page State", ps, 1) %}
+{% endfunc %}

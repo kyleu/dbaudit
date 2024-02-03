@@ -1,0 +1,27 @@
+<!-- Content managed by Project Forge, see [projectforge.md] for details. -->
+{% import (
+  "github.com/kyleu/dbaudit/app"
+  "github.com/kyleu/dbaudit/app/controller/cutil"
+  "github.com/kyleu/dbaudit/app/lib/database"
+  "github.com/kyleu/dbaudit/app/util"
+  "github.com/kyleu/dbaudit/views/components"
+  "github.com/kyleu/dbaudit/views/layout"
+) %}
+
+{% code type List struct {
+  layout.Basic
+  Keys []string
+  Services map[string]*database.Service
+} %}
+
+{% func (p *List) Body(as *app.State, ps *cutil.PageState) %}
+  <div class="card">
+    <h3>{%= components.SVGRefIcon(`database`, ps) %}Databases</h3>
+    <em>{%s util.StringPlural(len(p.Keys), "database") %} available</em>
+  </div>
+  {%- for _, key := range p.Keys -%}
+  <div class="card">
+    <h3><a href="/admin/database/{%s key %}">{%= components.SVGRefIcon(`database`, ps) %}{%s key %}</a></h3>
+  </div>
+  {%- endfor -%}
+{% endfunc %}

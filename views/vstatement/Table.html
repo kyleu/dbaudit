@@ -1,0 +1,52 @@
+<!-- Content managed by Project Forge, see [projectforge.md] for details. -->
+{% import (
+  "github.com/kyleu/dbaudit/app"
+  "github.com/kyleu/dbaudit/app/controller/cutil"
+  "github.com/kyleu/dbaudit/app/lib/filter"
+  "github.com/kyleu/dbaudit/app/statement"
+  "github.com/kyleu/dbaudit/views/components"
+  "github.com/kyleu/dbaudit/views/components/view"
+) %}
+
+{% func Table(models statement.Statements, params filter.ParamSet, as *app.State, ps *cutil.PageState) %}
+  {%- code prms := params.Get("statement", nil, ps.Logger).Sanitize("statement") -%}
+  <table>
+    <thead>
+      <tr>
+        {%= components.TableHeaderSimple("statement", "id", "ID", "UUID in format (00000000-0000-0000-0000-000000000000)", prms, ps.URI, ps) %}
+        {%= components.TableHeaderSimple("statement", "session_id", "Session ID", "Integer", prms, ps.URI, ps) %}
+        {%= components.TableHeaderSimple("statement", "action", "Action", statement.AllActions.Help(), prms, ps.URI, ps) %}
+        {%= components.TableHeaderSimple("statement", "succeeded", "Succeeded", "Value [true] or [false]", prms, ps.URI, ps) %}
+        {%= components.TableHeaderSimple("statement", "principal", "Principal", "String text", prms, ps.URI, ps) %}
+        {%= components.TableHeaderSimple("statement", "database", "Database", "String text", prms, ps.URI, ps) %}
+        {%= components.TableHeaderSimple("statement", "transaction_id", "Transaction ID", "Integer", prms, ps.URI, ps) %}
+        {%= components.TableHeaderSimple("statement", "duration", "Duration", "Integer", prms, ps.URI, ps) %}
+        {%= components.TableHeaderSimple("statement", "rows_affected", "Rows Affected", "Integer", prms, ps.URI, ps) %}
+        {%= components.TableHeaderSimple("statement", "rows_returned", "Rows Returned", "Integer", prms, ps.URI, ps) %}
+        {%= components.TableHeaderSimple("statement", "occurred", "Occurred", "Date and time, in almost any format", prms, ps.URI, ps) %}
+      </tr>
+    </thead>
+    <tbody>
+      {%- for _, model := range models -%}
+      <tr>
+        <td><a href="/statement/{%= view.UUID(&model.ID) %}">{%= view.UUID(&model.ID) %}</a></td>
+        <td>{%d model.SessionID %}</td>
+        <td>{%s model.Action.String() %}</td>
+        <td>{%v model.Succeeded %}</td>
+        <td>{%= view.String(model.Principal) %}</td>
+        <td>{%= view.String(model.Database) %}</td>
+        <td>{%d model.TransactionID %}</td>
+        <td>{%d model.Duration %}</td>
+        <td>{%d model.RowsAffected %}</td>
+        <td>{%d model.RowsReturned %}</td>
+        <td>{%= view.Timestamp(&model.Occurred) %}</td>
+      </tr>
+      {%- endfor -%}
+      {%- if prms.HasNextPage(len(models) + prms.Offset) || prms.HasPreviousPage() -%}
+      <tr>
+        <td colspan="11">{%= components.Pagination(len(models) + prms.Offset, prms, ps.URI) %}</td>
+      </tr>
+      {%- endif -%}
+    </tbody>
+  </table>
+{% endfunc %}

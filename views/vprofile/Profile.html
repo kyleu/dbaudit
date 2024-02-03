@@ -1,0 +1,79 @@
+<!-- Content managed by Project Forge, see [projectforge.md] for details. -->
+{% import (
+  "github.com/kyleu/dbaudit/app"
+  "github.com/kyleu/dbaudit/app/controller/cutil"
+  "github.com/kyleu/dbaudit/app/lib/auth"
+  "github.com/kyleu/dbaudit/app/lib/theme"
+  "github.com/kyleu/dbaudit/app/lib/user"
+  "github.com/kyleu/dbaudit/views/components"
+  "github.com/kyleu/dbaudit/views/components/edit"
+  "github.com/kyleu/dbaudit/views/layout"
+  "github.com/kyleu/dbaudit/views/vauth"
+  "github.com/kyleu/dbaudit/views/vtheme"
+) %}
+
+{% code type Profile struct {
+  layout.Basic
+  Profile *user.Profile
+  Theme *theme.Theme
+  Providers auth.Providers
+  Referrer string
+} %}
+
+{% func (p *Profile) Body(as *app.State, ps *cutil.PageState) %}
+  {%= vauth.SigninTable(p.Providers, p.Referrer, as, ps) %}
+  <form action="" method="post">
+    <input name="referrer" type="hidden" value="{%s p.Referrer %}" />
+    <div class="card">
+      <div class="right">
+        <a href="#modal-profile"><button type="button">Profile</button></a>
+        <a href="#modal-theme"><button type="button">Theme</button></a>
+      </div>
+      <h3>Profile</h3>
+      <div class="overflow full-width">
+        <table class="mt expanded">
+          <tbody>
+            {%= edit.StringTable("name", "", "Name", ps.Username(), 5) %}
+            <tr>
+              <th class="shrink"><label>Mode</label></th>
+              <td>
+                <label>
+                  {%- if p.Profile.Mode == "" -%}
+                  <input type="radio" class="mode-input" name="mode" value="" checked="checked" />
+                  {%- else -%}
+                  <input type="radio" class="mode-input" name="mode" value="" />
+                  {%- endif -%}
+                  System Default
+                </label>
+                <label>
+                  {%- if p.Profile.Mode == "light" -%}
+                  <input type="radio" class="mode-input" name="mode" value="light" checked="checked" />
+                  {%- else -%}
+                  <input type="radio" class="mode-input" name="mode" value="light" />
+                  {%- endif -%}
+                  Light
+                </label>
+                <label>
+                  {%- if p.Profile.Mode == "dark" -%}
+                  <input type="radio" class="mode-input" name="mode" value="dark" checked="checked" />
+                  {%- else -%}
+                  <input type="radio" class="mode-input" name="mode" value="dark" />
+                  {%- endif -%}
+                  Dark
+                </label>
+              </td>
+            </tr>
+            {%= vtheme.ChoicePanel(as.Themes.All(ps.Logger), "app", 5, ps) %}
+          </tbody>
+        </table>
+      </div>
+      <div class="mt">
+        <button type="submit">Save All Changes</button>
+        <button type="reset">Reset</button>
+      </div>
+    </div>
+  </form>
+
+  {%= components.JSONModal("profile", "Profile JSON", p.Profile, 1) %}
+  {%= components.JSONModal("theme", "Theme JSON", p.Theme, 1) %}
+{% endfunc %}

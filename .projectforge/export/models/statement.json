@@ -1,0 +1,100 @@
+{
+  "name": "statement",
+  "package": "statement",
+  "description": "A representation of a SQL execution",
+  "icon": "database",
+  "tags": [
+    "search"
+  ],
+  "columns": [
+    {
+      "name": "id",
+      "type": "uuid",
+      "pk": true,
+      "search": true
+    },
+    {
+      "name": "session_id",
+      "type": "int"
+    },
+    {
+      "name": "action",
+      "type": {
+        "k": "enum",
+        "t": {
+          "ref": "action"
+        }
+      },
+      "search": true,
+      "indexed": true
+    },
+    {
+      "name": "succeeded",
+      "type": "bool"
+    },
+    {
+      "name": "principal",
+      "type": "string"
+    },
+    {
+      "name": "database",
+      "type": "string"
+    },
+    {
+      "name": "filename",
+      "type": "string",
+      "display": "detail"
+    },
+    {
+      "name": "host",
+      "type": "string",
+      "display": "detail"
+    },
+    {
+      "name": "transaction_id",
+      "type": "int"
+    },
+    {
+      "name": "client_ip",
+      "type": "string",
+      "display": "detail"
+    },
+    {
+      "name": "duration",
+      "type": "int"
+    },
+    {
+      "name": "connection_id",
+      "type": "uuid",
+      "display": "detail"
+    },
+    {
+      "name": "rows_affected",
+      "type": "int"
+    },
+    {
+      "name": "rows_returned",
+      "type": "int"
+    },
+    {
+      "name": "sql",
+      "type": "string",
+      "display": "detail",
+      "format": "sql"
+    },
+    {
+      "name": "types",
+      "type": "map",
+      "display": "detail"
+    },
+    {
+      "name": "values",
+      "type": "map",
+      "display": "detail"
+    },
+    {
+      "name": "occurred",
+      "type": "timestamp"
+    }
+  ]
+}

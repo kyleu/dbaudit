@@ -1,0 +1,8 @@
+.DS_Store
+/.env
+/.vscode
+/.idea
+/.scannerwork
+/build
+/client/node_modules
+/tmp

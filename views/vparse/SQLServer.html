@@ -1,0 +1,102 @@
+{% import (
+  "github.com/kyleu/dbaudit/app"
+  "github.com/kyleu/dbaudit/app/controller/cutil"
+  "github.com/kyleu/dbaudit/app/parse"
+  "github.com/kyleu/dbaudit/app/util"
+  "github.com/kyleu/dbaudit/views/components"
+  "github.com/kyleu/dbaudit/views/components/edit"
+  "github.com/kyleu/dbaudit/views/layout"
+) %}
+
+{% code type SQLServer struct {
+  layout.Basic
+  Path string
+  Task string
+  Limit int
+  Result *parse.Result
+} %}
+
+{% func (p *SQLServer) Body(as *app.State, ps *cutil.PageState) %}
+  <div class="card">
+    <h3>{%= components.SVGRefIcon(`app`, ps) %}SQL Server Analysis</h3>
+    <form action="" method="post">
+      <table class="mt expanded min-200">
+        <tbody>
+          {%= edit.StringTable("path", "", "File Path", p.Path, 5, "Location of SQL Audit files") %}
+          {%= edit.SelectTable("task", "", "Task", p.Task, []string{"testbed", "count", "top10"}, nil, 5, "Task to run") %}
+          {%= edit.IntTable("limit", "", "Event Limit", p.Limit, 5, "Limit for returned events") %}
+          <tr><td colspan="2"><button type="submit">Analyze</button></td></tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+  {%- if p.Result != nil -%}
+  <div class="card">
+    <h3>{%= components.SVGRefIcon(`cog`, ps) %}{%s util.StringPlural(len(p.Result.Events), "Event") %}</h3>
+    <div class="mt overflow full-width">
+      <table class="expanded">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Action</th>
+            <th>Statement</th>
+            <th>Arguments</th>
+            <th>Rows</th>
+            <th>Duration</th>
+            <th>Occurred</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for _, st := range p.Result.Statements -%}
+          <tr>
+            <td>
+              <a href="#modal-event-{%s st.ID.String() %}">{%s st.ID.String() %}</a>
+              <div id="modal-event-{%s st.ID.String() %}" class="modal" style="display: none;">
+                <a class="backdrop" href="#"></a>
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <a href="#" class="modal-close">×</a>
+                    <h2>Event [{%s st.ID.String() %}]</h2>
+                  </div>
+                  <div class="modal-body">
+                    <ul class="accordion">
+                      <li>
+                        <input id="accordion-event-{%s st.ID.String() %}-raw" type="checkbox" hidden="hidden" />
+                        <label for="accordion-event-{%s st.ID.String() %}-raw">{%= components.ExpandCollapse(3, ps) %}Full Event</label>
+                        <div class="bd"><div><div>
+                          {%= components.JSON(st) %}
+                        </div></div></div>
+                      </li>
+                      <li>
+                        <input id="accordion-event-{%s st.ID.String() %}-sql" type="checkbox" hidden="hidden" />
+                        <label for="accordion-event-{%s st.ID.String() %}-sql">{%= components.ExpandCollapse(3, ps) %}SQL Statement</label>
+                        <div class="bd"><div><div>
+                          <pre style="white-space: pre-wrap;">{%s st.SQL %}</pre>
+                        </div></div></div>
+                      </li>
+                      <li>
+                        <input id="accordion-event-{%s st.ID.String() %}-args" type="checkbox" hidden="hidden" />
+                        <label for="accordion-event-{%s st.ID.String() %}-args">{%= components.ExpandCollapse(3, ps) %}Arguments</label>
+                        <div class="bd"><div><div>
+                          {%= components.JSON(st.Values) %}
+                        </div></div></div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>{%s st.Action.String() %}</td>
+            <td>{%s util.ByteSizeSI(int64(len(st.SQL))) %}</td>
+            <td>{%d len(st.Values) %}</td>
+            <td>{%d st.RowsAffected %}</td>
+            <td>{%s util.MicrosToMillis(st.Duration * 1000) %}</td>
+            <td>{%s util.TimeToFullMS(&st.Occurred) %}</td>
+          </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {%- endif -%}
+{% endfunc %}
