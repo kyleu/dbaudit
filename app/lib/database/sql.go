@@ -109,6 +109,21 @@ func SQLUpdateReturning(table string, columns []string, where string, returned [
 }
 
 func SQLUpsert(table string, columns []string, rows int, conflicts []string, updates []string, dbt *DBType) string {
+	if dbt.Placeholder == "@" {
+		return sqlServerUpsert(table, columns, rows, conflicts, updates, dbt)
+	}
+	q := SQLInsert(table, columns, rows, dbt)
+	q += " on conflict (" + strings.Join(conflicts, ", ") + ") do update set "
+	lo.ForEach(updates, func(x string, idx int) {
+		if idx > 0 {
+			q += ", "
+		}
+		q += fmt.Sprintf("%s = excluded.%s", x, x)
+	})
+	return q
+}
+
+func sqlServerUpsert(table string, columns []string, rows int, conflicts []string, updates []string, dbt *DBType) string {
 	colNames := strings.Join(columns, ", ")
 	params := make([]string, 0, rows)
 	for rowIdx := range lo.Range(rows) {

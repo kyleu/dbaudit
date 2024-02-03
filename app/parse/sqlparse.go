@@ -10,9 +10,7 @@ import (
 	"github.com/kyleu/dbaudit/app/util"
 )
 
-var (
-	partsRegex = regexp.MustCompile(`(?s)N'(.*?)',\s*(N'.*?'),\s*(.*)`)
-)
+var partsRegex = regexp.MustCompile(`(?s)N'(.*?)',\s*(N'.*?'),\s*(.*)`)
 
 func parseSQL(input string) (string, util.ValueMap, util.ValueMap, error) {
 	if !strings.HasPrefix(input, "exec sp_executesql") {
@@ -75,7 +73,7 @@ func parseSQL(input string) (string, util.ValueMap, util.ValueMap, error) {
 				}
 			}
 		}
-		//vals[num] = fmt.Sprintf("[%s]: %v", t, v)
+		// vals[num] = fmt.Sprintf("[%s]: %v", t, v)
 		vals["@"+num] = v
 	}
 

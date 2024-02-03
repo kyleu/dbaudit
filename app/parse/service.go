@@ -2,6 +2,7 @@ package parse
 
 import (
 	"context"
+
 	"github.com/kyleu/dbaudit/queries"
 
 	"github.com/kyleu/dbaudit/app/lib/database"

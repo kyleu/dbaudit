@@ -2,6 +2,7 @@ package app // import github.com/kyleu/dbaudit
 
 import (
 	"context"
+
 	"github.com/kyleu/dbaudit/app/db"
 
 	"github.com/pkg/errors"
