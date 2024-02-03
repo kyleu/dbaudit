@@ -1,0 +1,24 @@
+{
+  "name": "engine",
+  "package": "db",
+  "description": "The supported database engines",
+  "icon": "star",
+  "values": [
+    {
+      "key": "postgres",
+      "name": "PostgreSQL"
+    },
+    {
+      "key": "mysql",
+      "name": "MySQL"
+    },
+    {
+      "key": "mssql",
+      "name": "Microsoft SQL Server"
+    },
+    {
+      "key": "sqlite",
+      "name": "SQLite"
+    }
+  ]
+}

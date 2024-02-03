@@ -1,9 +1,12 @@
 -- Content managed by Project Forge, see [projectforge.md] for details.
 -- {% func DropAll() %}
 -- {%= StatementDrop() %}
+-- {%= ConnectionDrop() %}
+-- {%= TypesDrop() %}
 -- {% endfunc %}
 
 -- {% func CreateAll() %}
 -- {%= TypesCreate() %}
+-- {%= ConnectionCreate() %}
 -- {%= StatementCreate() %}
 -- {% endfunc %}

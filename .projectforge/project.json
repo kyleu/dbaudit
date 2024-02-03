@@ -15,9 +15,11 @@
     "migration",
     "oauth",
     "sandbox",
+    "schema",
     "search",
     "sqlserver",
-    "themecatalog"
+    "themecatalog",
+    "types"
   ],
   "tags": [
     "kyleu"

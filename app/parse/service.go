@@ -2,7 +2,7 @@ package parse
 
 import (
 	"context"
-	"fmt"
+	"github.com/kyleu/dbaudit/queries"
 
 	"github.com/kyleu/dbaudit/app/lib/database"
 	"github.com/kyleu/dbaudit/app/statement"
@@ -19,7 +19,7 @@ func NewService(db *database.Service, s *statement.Service) *Service {
 }
 
 func (s *Service) Testbed(ctx context.Context, path string, limit int, logger util.Logger) (*Result, error) {
-	q := fmt.Sprintf(sqlQuery, limit, path)
+	q := queries.AuditFiles(path, limit)
 	var res Events
 	err := s.DB.Select(ctx, &res, q, nil, logger, path)
 	if err != nil {

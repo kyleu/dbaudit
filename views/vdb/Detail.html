@@ -1,0 +1,76 @@
+<!-- Content managed by Project Forge, see [projectforge.md] for details. -->
+{% import (
+  "github.com/kyleu/dbaudit/app"
+  "github.com/kyleu/dbaudit/app/controller/cutil"
+  "github.com/kyleu/dbaudit/app/db"
+  "github.com/kyleu/dbaudit/views/components"
+  "github.com/kyleu/dbaudit/views/components/view"
+  "github.com/kyleu/dbaudit/views/layout"
+) %}
+
+{% code type Detail struct {
+  layout.Basic
+  Model *db.Connection
+} %}
+
+{% func (p *Detail) Body(as *app.State, ps *cutil.PageState) %}
+  <div class="card">
+    <div class="right">
+      <a href="#modal-connection"><button type="button">JSON</button></a>
+      <a href="{%s p.Model.WebPath() %}/edit"><button>{%= components.SVGRef("edit", 15, 15, "icon", ps) %}Edit</button></a>
+    </div>
+    <h3>{%= components.SVGRefIcon(`database`, ps) %} {%s p.Model.TitleString() %}</h3>
+    <div><a href="/db"><em>Connection</em></a></div>
+    <table class="mt">
+      <tbody>
+        <tr>
+          <th class="shrink" title="UUID in format (00000000-0000-0000-0000-000000000000)">ID</th>
+          <td>{%= view.UUID(&p.Model.ID) %}</td>
+        </tr>
+        <tr>
+          <th class="shrink" title="String text">Name</th>
+          <td><strong>{%= view.String(p.Model.Name) %}</strong></td>
+        </tr>
+        <tr>
+          <th class="shrink" title="String text">Icon</th>
+          <td>{%= view.String(p.Model.Icon) %}</td>
+        </tr>
+        <tr>
+          <th class="shrink" title="{%s db.AllEngines.Help() %}">Engine</th>
+          <td>{%s p.Model.Engine.String() %}</td>
+        </tr>
+        <tr>
+          <th class="shrink" title="String text">Server</th>
+          <td>{%= view.String(p.Model.Server) %}</td>
+        </tr>
+        <tr>
+          <th class="shrink" title="Integer">Port</th>
+          <td>{%d p.Model.Port %}</td>
+        </tr>
+        <tr>
+          <th class="shrink" title="String text">Username</th>
+          <td>{%= view.String(p.Model.Username) %}</td>
+        </tr>
+        <tr>
+          <th class="shrink" title="String text">Password</th>
+          <td>{%= view.String(p.Model.Password) %}</td>
+        </tr>
+        <tr>
+          <th class="shrink" title="String text">Database</th>
+          <td>{%= view.String(p.Model.Database) %}</td>
+        </tr>
+        <tr>
+          <th class="shrink" title="String text">Schema</th>
+          <td>{%= view.String(p.Model.Schema) %}</td>
+        </tr>
+        <tr>
+          <th class="shrink" title="String text">Conn Override</th>
+          <td>{%= view.String(p.Model.ConnOverride) %}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  {%- comment %}$PF_SECTION_START(extra)${% endcomment -%}
+  {%- comment %}$PF_SECTION_END(extra)${% endcomment -%}
+  {%= components.JSONModal("connection", "Connection JSON", p.Model, 1) %}
+{% endfunc %}

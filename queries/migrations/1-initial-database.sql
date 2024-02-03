@@ -1,4 +1,5 @@
 -- {% import "github.com/kyleu/dbaudit/queries/ddl" %}
+-- {% import "github.com/kyleu/dbaudit/queries/seeddata" %}
 
 -- {% func Migration1InitialDatabase(debug bool) %}
 
@@ -7,4 +8,5 @@
 -- {%- endif -%}
 
 -- {%= ddl.CreateAll() %}
+-- {%= seeddata.SeedDataAll() %}
 -- {% endfunc %}

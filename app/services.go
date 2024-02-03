@@ -2,6 +2,7 @@ package app // import github.com/kyleu/dbaudit
 
 import (
 	"context"
+	"github.com/kyleu/dbaudit/app/db"
 
 	"github.com/pkg/errors"
 
@@ -13,8 +14,9 @@ import (
 )
 
 type Services struct {
-	Parse     *parse.Service
-	Statement *statement.Service
+	Connection *db.Service
+	Statement  *statement.Service
+	Parse      *parse.Service
 }
 
 func NewServices(ctx context.Context, st *State, logger util.Logger) (*Services, error) {
@@ -25,8 +27,9 @@ func NewServices(ctx context.Context, st *State, logger util.Logger) (*Services,
 	}
 	stmtSvc := statement.NewService(st.DB)
 	return &Services{
-		Parse:     parse.NewService(st.DB, stmtSvc),
-		Statement: stmtSvc,
+		Connection: db.NewService(st.DB),
+		Statement:  stmtSvc,
+		Parse:      parse.NewService(st.DB, stmtSvc),
 	}, nil
 }
 

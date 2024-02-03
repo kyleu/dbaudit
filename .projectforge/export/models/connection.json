@@ -1,0 +1,87 @@
+{
+  "name": "connection",
+  "package": "db",
+  "description": "A connection to a database",
+  "icon": "database",
+  "tags": [
+    "search"
+  ],
+  "columns": [
+    {
+      "name": "id",
+      "type": "uuid",
+      "pk": true,
+      "search": true
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "tags": [
+        "title"
+      ]
+    },
+    {
+      "name": "icon",
+      "type": "string"
+    },
+    {
+      "name": "engine",
+      "type": {
+        "k": "enum",
+        "t": {
+          "ref": "engine"
+        }
+      },
+      "search": true,
+      "indexed": true
+    },
+    {
+      "name": "server",
+      "type": "string"
+    },
+    {
+      "name": "port",
+      "type": "int",
+      "display": "detail"
+    },
+    {
+      "name": "username",
+      "type": "string",
+      "display": "detail"
+    },
+    {
+      "name": "password",
+      "type": "string",
+      "display": "detail"
+    },
+    {
+      "name": "database",
+      "type": "string"
+    },
+    {
+      "name": "schema",
+      "type": "string",
+      "display": "detail"
+    },
+    {
+      "name": "conn_override",
+      "type": "string",
+      "display": "detail"
+    }
+  ],
+  "seedData": [
+    [
+      "10000000-0000-0000-0000-000000000001",
+      "Local SQL Server",
+      "star",
+      "mssql",
+      "localhost",
+      1433,
+      "sa",
+      "aStrongPassword123!",
+      "Groupmatics",
+      "",
+      ""
+    ]
+  ]
+}

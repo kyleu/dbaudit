@@ -15,6 +15,8 @@ The following modules were used to build this project:
 - [migration](./doc/module/migration.md)
 - [oauth](./doc/module/oauth.md)
 - [sandbox](./doc/module/sandbox.md)
+- [schema](./doc/module/schema.md)
 - [search](./doc/module/search.md)
 - [sqlserver](./doc/module/sqlserver.md)
 - [themecatalog](./doc/module/themecatalog.md)
+- [types](./doc/module/types.md)

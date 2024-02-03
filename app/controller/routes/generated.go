@@ -8,6 +8,14 @@ import (
 )
 
 func generatedRoutes(r *router.Router) {
+	r.GET("/db", controller.ConnectionList)
+	r.GET("/db/_new", controller.ConnectionCreateForm)
+	r.POST("/db/_new", controller.ConnectionCreate)
+	r.GET("/db/_random", controller.ConnectionRandom)
+	r.GET("/db/{id}", controller.ConnectionDetail)
+	r.GET("/db/{id}/edit", controller.ConnectionEditForm)
+	r.POST("/db/{id}/edit", controller.ConnectionEdit)
+	r.GET("/db/{id}/delete", controller.ConnectionDelete)
 	r.GET("/statement", controller.StatementList)
 	r.GET("/statement/_new", controller.StatementCreateForm)
 	r.POST("/statement/_new", controller.StatementCreate)

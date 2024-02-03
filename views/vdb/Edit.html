@@ -1,0 +1,46 @@
+<!-- Content managed by Project Forge, see [projectforge.md] for details. -->
+{% import (
+  "github.com/kyleu/dbaudit/app"
+  "github.com/kyleu/dbaudit/app/controller/cutil"
+  "github.com/kyleu/dbaudit/app/db"
+  "github.com/kyleu/dbaudit/views/components"
+  "github.com/kyleu/dbaudit/views/components/edit"
+  "github.com/kyleu/dbaudit/views/layout"
+) %}
+
+{% code type Edit struct {
+  layout.Basic
+  Model *db.Connection
+  IsNew bool
+} %}
+
+{% func (p *Edit) Body(as *app.State, ps *cutil.PageState) %}
+  <div class="card">
+    {%- if p.IsNew -%}
+    <div class="right"><a href="?prototype=random"><button>Random</button></a></div>
+    <h3>{%= components.SVGRefIcon(`database`, ps) %} New Connection</h3>
+    <form action="/db/_new" class="mt" method="post">
+    {%- else -%}
+    <div class="right"><a href="{%s p.Model.WebPath() %}/delete" onclick="return confirm('Are you sure you wish to delete connection [{%s p.Model.String() %}]?')"><button>Delete</button></a></div>
+    <h3>{%= components.SVGRefIcon(`database`, ps) %} Edit Connection [{%s p.Model.String() %}]</h3>
+    <form action="" method="post">
+    {%- endif -%}
+      <table class="mt expanded">
+        <tbody>
+          {% if p.IsNew %}{%= edit.UUIDTable("id", "", "ID", &p.Model.ID, 5, "UUID in format (00000000-0000-0000-0000-000000000000)") %}{% endif %}
+          {%= edit.StringTable("name", "", "Name", p.Model.Name, 5, "String text") %}
+          {%= edit.StringTable("icon", "", "Icon", p.Model.Icon, 5, "String text") %}
+          {%= edit.SelectTable("engine", "", "Engine", p.Model.Engine.Key, db.AllEngines.Keys(), db.AllEngines.Strings(), 5, db.AllEngines.Help()) %}
+          {%= edit.StringTable("server", "", "Server", p.Model.Server, 5, "String text") %}
+          {%= edit.IntTable("port", "", "Port", p.Model.Port, 5, "Integer") %}
+          {%= edit.StringTable("username", "", "Username", p.Model.Username, 5, "String text") %}
+          {%= edit.StringTable("password", "", "Password", p.Model.Password, 5, "String text") %}
+          {%= edit.StringTable("database", "", "Database", p.Model.Database, 5, "String text") %}
+          {%= edit.StringTable("schema", "", "Schema", p.Model.Schema, 5, "String text") %}
+          {%= edit.StringTable("connOverride", "", "Conn Override", p.Model.ConnOverride, 5, "String text") %}
+          <tr><td colspan="2"><button type="submit">Save Changes</button></td></tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+{% endfunc %}

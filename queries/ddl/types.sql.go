@@ -61,32 +61,33 @@ func StreamTypesCreate(qw422016 *qt422016.Writer) {
 //line queries/ddl/types.sql:5
 	qw422016.N().S(`
 -- skipping definition of enum [action], since SQL Server does not support custom types
+-- skipping definition of enum [engine], since SQL Server does not support custom types
 -- `)
-//line queries/ddl/types.sql:7
+//line queries/ddl/types.sql:8
 }
 
-//line queries/ddl/types.sql:7
+//line queries/ddl/types.sql:8
 func WriteTypesCreate(qq422016 qtio422016.Writer) {
-//line queries/ddl/types.sql:7
+//line queries/ddl/types.sql:8
 	qw422016 := qt422016.AcquireWriter(qq422016)
-//line queries/ddl/types.sql:7
+//line queries/ddl/types.sql:8
 	StreamTypesCreate(qw422016)
-//line queries/ddl/types.sql:7
+//line queries/ddl/types.sql:8
 	qt422016.ReleaseWriter(qw422016)
-//line queries/ddl/types.sql:7
+//line queries/ddl/types.sql:8
 }
 
-//line queries/ddl/types.sql:7
+//line queries/ddl/types.sql:8
 func TypesCreate() string {
-//line queries/ddl/types.sql:7
+//line queries/ddl/types.sql:8
 	qb422016 := qt422016.AcquireByteBuffer()
-//line queries/ddl/types.sql:7
+//line queries/ddl/types.sql:8
 	WriteTypesCreate(qb422016)
-//line queries/ddl/types.sql:7
+//line queries/ddl/types.sql:8
 	qs422016 := string(qb422016.B)
-//line queries/ddl/types.sql:7
+//line queries/ddl/types.sql:8
 	qt422016.ReleaseByteBuffer(qb422016)
-//line queries/ddl/types.sql:7
+//line queries/ddl/types.sql:8
 	return qs422016
-//line queries/ddl/types.sql:7
+//line queries/ddl/types.sql:8
 }

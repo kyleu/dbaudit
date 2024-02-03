@@ -1,0 +1,3 @@
+-- {% func SeedDataAll() %}
+-- {%= ConnectionSeedData() %}
+-- {% endfunc %}
