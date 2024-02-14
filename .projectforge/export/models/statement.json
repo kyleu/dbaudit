@@ -84,12 +84,24 @@
     },
     {
       "name": "types",
-      "type": "map",
+      "type": {
+        "k": "map",
+        "t": {
+          "k": "string",
+          "v": "any"
+        }
+      },
       "display": "detail"
     },
     {
       "name": "values",
-      "type": "map",
+      "type": {
+        "k": "map",
+        "t": {
+          "k": "string",
+          "v": "any"
+        }
+      },
       "display": "detail"
     },
     {

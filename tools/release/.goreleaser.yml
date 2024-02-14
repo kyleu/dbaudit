@@ -8,6 +8,21 @@ archives:
     files:
       - none*
 
+brews:
+  -
+    repository:
+      owner: "kyleu"
+      name: "homebrew-kyleu"
+    commit_author:
+      name: "Kyle U"
+      email: "kyle@kyleu.com"
+    folder: Formula
+    homepage: "https://github.com/kyleu/dbaudit"
+    description: "Allows you to visualize the activity on your SQL Server installation"
+    license: "MIT"
+    skip_upload: "false"
+    install: "bin.install \"dbaudit\""
+
 changelog:
   use: "github"
 
@@ -44,6 +59,9 @@ release:
   extra_files:
     # $PF_SECTION_START(releasefiles)$
     # $PF_SECTION_END(releasefiles)$
+
+signs:
+  - artifacts: checksum
 
 snapshot:
   name_template: "{{ .Tag }}"

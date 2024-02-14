@@ -38,6 +38,8 @@
   "build": {
     "changelog": true,
     "testsFail": true,
-    "x86": true
+    "signing": true,
+    "x86": true,
+    "homebrew": true
   }
 }

@@ -19,6 +19,14 @@ A changelog will be created based on the commit history, including all authors a
 
 Multiple Docker images will be created. The main image is `ghcr.io/kyleu/dbaudit/x.x.x`, and a debug image is provided at `ghcr.io/kyleu/dbaudit/x.x.x-debug` that includes `delve` for debugging
 
+### Homebrew
+
+Packages for macOS and Linux will be pushed to Homebrew at `kyleu/homebrew-kyleu`
+
+### Signing
+
+Release binaries and the checksum file are signed using `gpg`
+
 ### Source Code
 
 The source code will be bundled in the release, available as `dbaudit_x.x.x_source.zip`

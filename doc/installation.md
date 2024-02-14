@@ -4,6 +4,11 @@
 ## Pre-built binaries
 Download any package from the [release page](https://github.com/kyleu/dbaudit/releases).
 
+### Homebrew
+```shell
+brew install kyleu/kyleu/dbaudit
+```
+
 ## Running with Docker
 ```shell
 docker run -p 55500:55500 ghcr.io/kyleu/dbaudit:latest
