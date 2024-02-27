@@ -3,11 +3,10 @@ package parse
 import (
 	"context"
 
-	"github.com/kyleu/dbaudit/queries"
-
 	"github.com/kyleu/dbaudit/app/lib/database"
 	"github.com/kyleu/dbaudit/app/statement"
 	"github.com/kyleu/dbaudit/app/util"
+	"github.com/kyleu/dbaudit/queries"
 )
 
 type Service struct {
