@@ -3,8 +3,6 @@ package app // import github.com/kyleu/dbaudit
 import (
 	"context"
 
-	"github.com/kyleu/dbaudit/app/db"
-
 	"github.com/pkg/errors"
 
 	"github.com/kyleu/dbaudit/app/lib/database/migrate"
@@ -15,9 +13,9 @@ import (
 )
 
 type Services struct {
-	Connection *db.Service
-	Statement  *statement.Service
-	Parse      *parse.Service
+	GeneratedServices
+
+	Parse *parse.Service
 }
 
 func NewServices(ctx context.Context, st *State, logger util.Logger) (*Services, error) {
@@ -28,9 +26,9 @@ func NewServices(ctx context.Context, st *State, logger util.Logger) (*Services,
 	}
 	stmtSvc := statement.NewService(st.DB)
 	return &Services{
-		Connection: db.NewService(st.DB),
-		Statement:  stmtSvc,
-		Parse:      parse.NewService(st.DB, stmtSvc),
+		GeneratedServices: initGeneratedServices(ctx, st.DB, logger),
+
+		Parse: parse.NewService(st.DB, stmtSvc),
 	}, nil
 }
 
