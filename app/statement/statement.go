@@ -100,7 +100,7 @@ var FieldDescs = util.FieldDescs{
 	{Key: "rowsAffected", Title: "Rows Affected", Description: "", Type: "int"},
 	{Key: "rowsReturned", Title: "Rows Returned", Description: "", Type: "int"},
 	{Key: "sql", Title: "SQL", Description: "", Type: "string"},
-	{Key: "types", Title: "Types", Description: "", Type: "map[string]any"},
-	{Key: "values", Title: "Values", Description: "", Type: "map[string]any"},
+	{Key: "types", Title: "Types", Description: "", Type: "map"},
+	{Key: "values", Title: "Values", Description: "", Type: "map"},
 	{Key: "occurred", Title: "Occurred", Description: "", Type: "timestamp"},
 }
