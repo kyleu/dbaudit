@@ -2,6 +2,8 @@
 package db
 
 import (
+	"fmt"
+
 	"github.com/google/uuid"
 
 	"github.com/kyleu/dbaudit/app/util"
@@ -53,6 +55,14 @@ func Random() *Connection {
 		Schema:       util.RandomString(12),
 		ConnOverride: util.RandomString(12),
 	}
+}
+
+func (c *Connection) Strings() []string {
+	return []string{c.ID.String(), c.Name, c.Icon, c.Engine.String(), c.Server, fmt.Sprint(c.Port), c.Username, c.Password, c.Database, c.Schema, c.ConnOverride}
+}
+
+func (c *Connection) ToCSV() ([]string, [][]string) {
+	return FieldDescs.Keys(), [][]string{c.Strings()}
 }
 
 func (c *Connection) WebPath() string {

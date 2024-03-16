@@ -76,6 +76,12 @@ func (s Statements) GetByActions(actions ...Action) Statements {
 	})
 }
 
+func (s Statements) ToCSV() ([]string, [][]string) {
+	return FieldDescs.Keys(), lo.Map(s, func(x *Statement, _ int) []string {
+		return x.Strings()
+	})
+}
+
 func (s Statements) Random() *Statement {
 	if len(s) == 0 {
 		return nil

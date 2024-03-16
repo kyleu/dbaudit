@@ -43,8 +43,8 @@
           {%= edit.IntTable("rowsAffected", "", "Rows Affected", p.Model.RowsAffected, 5, "Integer") %}
           {%= edit.IntTable("rowsReturned", "", "Rows Returned", p.Model.RowsReturned, 5, "Integer") %}
           {%= edit.TextareaTable("sql", "", "SQL", 8, p.Model.SQL, 5, "String text") %}
-          {%= edit.TextareaTable("types", "", "Types", 8, util.ToJSON(p.Model.Types), 5, "JSON object") %}
-          {%= edit.TextareaTable("values", "", "Values", 8, util.ToJSON(p.Model.Values), 5, "JSON object") %}
+          {%= edit.TextareaTable("types", "", "Types", 8, util.ToJSON(p.Model.Types.String()), 5, "JSON object") %}
+          {%= edit.TextareaTable("values", "", "Values", 8, util.ToJSON(p.Model.Values.String()), 5, "JSON object") %}
           {%= edit.TimestampTable("occurred", "", "Occurred", &p.Model.Occurred, 5, "Date and time, in almost any format") %}
           <tr><td colspan="2"><button type="submit">Save Changes</button></td></tr>
         </tbody>

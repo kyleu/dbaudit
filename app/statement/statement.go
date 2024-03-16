@@ -2,6 +2,7 @@
 package statement
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -70,6 +71,15 @@ func Random() *Statement {
 		Values:        util.RandomValueMap(4),
 		Occurred:      util.TimeCurrent(),
 	}
+}
+
+//nolint:lll
+func (s *Statement) Strings() []string {
+	return []string{s.ID.String(), fmt.Sprint(s.SessionID), s.Action.String(), fmt.Sprint(s.Succeeded), s.Principal, s.Database, s.Filename, s.Host, fmt.Sprint(s.TransactionID), s.ClientIP, fmt.Sprint(s.Duration), s.ConnectionID.String(), fmt.Sprint(s.RowsAffected), fmt.Sprint(s.RowsReturned), s.SQL, s.Types.String(), s.Values.String(), util.TimeToFull(&s.Occurred)}
+}
+
+func (s *Statement) ToCSV() ([]string, [][]string) {
+	return FieldDescs.Keys(), [][]string{s.Strings()}
 }
 
 func (s *Statement) WebPath() string {

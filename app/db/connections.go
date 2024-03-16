@@ -76,6 +76,12 @@ func (c Connections) GetByEngines(engines ...Engine) Connections {
 	})
 }
 
+func (c Connections) ToCSV() ([]string, [][]string) {
+	return FieldDescs.Keys(), lo.Map(c, func(x *Connection, _ int) []string {
+		return x.Strings()
+	})
+}
+
 func (c Connections) Random() *Connection {
 	if len(c) == 0 {
 		return nil

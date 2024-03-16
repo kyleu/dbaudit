@@ -163,12 +163,12 @@ func (p *Edit) StreamBody(qw422016 *qt422016.Writer, as *app.State, ps *cutil.Pa
 	qw422016.N().S(`
           `)
 //line views/vstatement/Edit.html:46
-	edit.StreamTextareaTable(qw422016, "types", "", "Types", 8, util.ToJSON(p.Model.Types), 5, "JSON object")
+	edit.StreamTextareaTable(qw422016, "types", "", "Types", 8, util.ToJSON(p.Model.Types.String()), 5, "JSON object")
 //line views/vstatement/Edit.html:46
 	qw422016.N().S(`
           `)
 //line views/vstatement/Edit.html:47
-	edit.StreamTextareaTable(qw422016, "values", "", "Values", 8, util.ToJSON(p.Model.Values), 5, "JSON object")
+	edit.StreamTextareaTable(qw422016, "values", "", "Values", 8, util.ToJSON(p.Model.Values.String()), 5, "JSON object")
 //line views/vstatement/Edit.html:47
 	qw422016.N().S(`
           `)
