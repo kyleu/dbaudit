@@ -21,7 +21,7 @@
     <h3>{%= components.SVGRefIcon(`database`, ps) %} New Connection</h3>
     <form action="/db/_new" class="mt" method="post">
     {%- else -%}
-    <div class="right"><a href="{%s p.Model.WebPath() %}/delete" onclick="return confirm('Are you sure you wish to delete connection [{%s p.Model.String() %}]?')"><button>Delete</button></a></div>
+    <div class="right"><a class="link-confirm" href="{%s p.Model.WebPath() %}/delete" data-message="Are you sure you wish to delete connection [{%s p.Model.String() %}]?"><button>Delete</button></a></div>
     <h3>{%= components.SVGRefIcon(`database`, ps) %} Edit Connection [{%s p.Model.String() %}]</h3>
     <form action="" method="post">
     {%- endif -%}
