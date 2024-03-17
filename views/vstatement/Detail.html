@@ -21,82 +21,84 @@
     </div>
     <h3>{%= components.SVGRefIcon(`database`, ps) %} {%s p.Model.TitleString() %}</h3>
     <div><a href="/statement"><em>Statement</em></a></div>
-    <table class="mt">
-      <tbody>
-        <tr>
-          <th class="shrink" title="UUID in format (00000000-0000-0000-0000-000000000000)">ID</th>
-          <td>{%= view.UUID(&p.Model.ID) %}</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="Integer">Session ID</th>
-          <td>{%d p.Model.SessionID %}</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="{%s statement.AllActions.Help() %}">Action</th>
-          <td>{%s p.Model.Action.String() %}</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="Value [true] or [false]">Succeeded</th>
-          <td>{%v p.Model.Succeeded %}</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="String text">Principal</th>
-          <td>{%= view.String(p.Model.Principal) %}</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="String text">Database</th>
-          <td>{%= view.String(p.Model.Database) %}</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="String text">Filename</th>
-          <td>{%= view.String(p.Model.Filename) %}</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="String text">Host</th>
-          <td>{%= view.String(p.Model.Host) %}</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="Integer">Transaction ID</th>
-          <td>{%d p.Model.TransactionID %}</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="String text">Client IP</th>
-          <td>{%= view.String(p.Model.ClientIP) %}</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="Integer">Duration</th>
-          <td>{%d p.Model.Duration %}</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="UUID in format (00000000-0000-0000-0000-000000000000)">Connection ID</th>
-          <td>{%= view.UUID(&p.Model.ConnectionID) %}</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="Integer">Rows Affected</th>
-          <td>{%d p.Model.RowsAffected %}</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="Integer">Rows Returned</th>
-          <td>{%d p.Model.RowsReturned %}</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="String text">SQL</th>
-          <td>{%= view.Format(p.Model.SQL, "sql") %}</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="JSON object">Types</th>
-          <td>{%= components.JSON(p.Model.Types) %}</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="JSON object">Values</th>
-          <td>{%= components.JSON(p.Model.Values) %}</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="Date and time, in almost any format">Occurred</th>
-          <td>{%= view.Timestamp(&p.Model.Occurred) %}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="mt overflow full-width">
+      <table>
+        <tbody>
+          <tr>
+            <th class="shrink" title="UUID in format (00000000-0000-0000-0000-000000000000)">ID</th>
+            <td>{%= view.UUID(&p.Model.ID) %}</td>
+          </tr>
+          <tr>
+            <th class="shrink" title="Integer">Session ID</th>
+            <td>{%d p.Model.SessionID %}</td>
+          </tr>
+          <tr>
+            <th class="shrink" title="{%s statement.AllActions.Help() %}">Action</th>
+            <td>{%s p.Model.Action.String() %}</td>
+          </tr>
+          <tr>
+            <th class="shrink" title="Value [true] or [false]">Succeeded</th>
+            <td>{%v p.Model.Succeeded %}</td>
+          </tr>
+          <tr>
+            <th class="shrink" title="String text">Principal</th>
+            <td>{%= view.String(p.Model.Principal) %}</td>
+          </tr>
+          <tr>
+            <th class="shrink" title="String text">Database</th>
+            <td>{%= view.String(p.Model.Database) %}</td>
+          </tr>
+          <tr>
+            <th class="shrink" title="String text">Filename</th>
+            <td>{%= view.String(p.Model.Filename) %}</td>
+          </tr>
+          <tr>
+            <th class="shrink" title="String text">Host</th>
+            <td>{%= view.String(p.Model.Host) %}</td>
+          </tr>
+          <tr>
+            <th class="shrink" title="Integer">Transaction ID</th>
+            <td>{%d p.Model.TransactionID %}</td>
+          </tr>
+          <tr>
+            <th class="shrink" title="String text">Client IP</th>
+            <td>{%= view.String(p.Model.ClientIP) %}</td>
+          </tr>
+          <tr>
+            <th class="shrink" title="Integer">Duration</th>
+            <td>{%d p.Model.Duration %}</td>
+          </tr>
+          <tr>
+            <th class="shrink" title="UUID in format (00000000-0000-0000-0000-000000000000)">Connection ID</th>
+            <td>{%= view.UUID(&p.Model.ConnectionID) %}</td>
+          </tr>
+          <tr>
+            <th class="shrink" title="Integer">Rows Affected</th>
+            <td>{%d p.Model.RowsAffected %}</td>
+          </tr>
+          <tr>
+            <th class="shrink" title="Integer">Rows Returned</th>
+            <td>{%d p.Model.RowsReturned %}</td>
+          </tr>
+          <tr>
+            <th class="shrink" title="String text">SQL</th>
+            <td>{%= view.Format(p.Model.SQL, "sql") %}</td>
+          </tr>
+          <tr>
+            <th class="shrink" title="JSON object">Types</th>
+            <td>{%= components.JSON(p.Model.Types) %}</td>
+          </tr>
+          <tr>
+            <th class="shrink" title="JSON object">Values</th>
+            <td>{%= components.JSON(p.Model.Values) %}</td>
+          </tr>
+          <tr>
+            <th class="shrink" title="Date and time, in almost any format">Occurred</th>
+            <td>{%= view.Timestamp(&p.Model.Occurred) %}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
   {%- comment %}$PF_SECTION_START(extra)${% endcomment -%}
   {%= RenderPlan(p.Model, as, ps) %}
