@@ -13,6 +13,7 @@ import (
 )
 
 type Services struct {
+	CoreServices
 	GeneratedServices
 
 	Parse *parse.Service
@@ -26,7 +27,8 @@ func NewServices(ctx context.Context, st *State, logger util.Logger) (*Services,
 	}
 	stmtSvc := statement.NewService(st.DB)
 	return &Services{
-		GeneratedServices: initGeneratedServices(ctx, st.DB, logger),
+		CoreServices:      initCoreServices(ctx, st, logger),
+		GeneratedServices: initGeneratedServices(ctx, st, logger),
 
 		Parse: parse.NewService(st.DB, stmtSvc),
 	}, nil

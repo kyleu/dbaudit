@@ -5,7 +5,6 @@ import (
 	"context"
 
 	"github.com/kyleu/dbaudit/app/db"
-	"github.com/kyleu/dbaudit/app/lib/database"
 	"github.com/kyleu/dbaudit/app/statement"
 	"github.com/kyleu/dbaudit/app/util"
 )
@@ -15,9 +14,9 @@ type GeneratedServices struct {
 	Statement  *statement.Service
 }
 
-func initGeneratedServices(ctx context.Context, dbSvc *database.Service, logger util.Logger) GeneratedServices {
+func initGeneratedServices(ctx context.Context, st *State, logger util.Logger) GeneratedServices {
 	return GeneratedServices{
-		Connection: db.NewService(dbSvc),
-		Statement:  statement.NewService(dbSvc),
+		Connection: db.NewService(st.DB),
+		Statement:  statement.NewService(st.DB),
 	}
 }
