@@ -9,7 +9,6 @@ var (
 	menuItemStatement  = &menu.Item{Key: "statement", Title: "Statements", Description: "A representation of a SQL execution", Icon: "database", Route: "/statement"}
 )
 
-//nolint:unused
 func generatedMenu() menu.Items {
 	return menu.Items{
 		menuItemConnection,
