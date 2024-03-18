@@ -62,136 +62,138 @@ func (p *Detail) StreamBody(qw422016 *qt422016.Writer, as *app.State, ps *cutil.
 //line views/vdb/Detail.html:22
 	qw422016.N().S(`</h3>
     <div><a href="/db"><em>Connection</em></a></div>
-    <table class="mt">
-      <tbody>
-        <tr>
-          <th class="shrink" title="UUID in format (00000000-0000-0000-0000-000000000000)">ID</th>
-          <td>`)
-//line views/vdb/Detail.html:28
+    <div class="mt overflow full-width">
+      <table>
+        <tbody>
+          <tr>
+            <th class="shrink" title="UUID in format (00000000-0000-0000-0000-000000000000)">ID</th>
+            <td>`)
+//line views/vdb/Detail.html:29
 	view.StreamUUID(qw422016, &p.Model.ID)
-//line views/vdb/Detail.html:28
+//line views/vdb/Detail.html:29
 	qw422016.N().S(`</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="String text">Name</th>
-          <td><strong>`)
-//line views/vdb/Detail.html:32
+          </tr>
+          <tr>
+            <th class="shrink" title="String text">Name</th>
+            <td><strong>`)
+//line views/vdb/Detail.html:33
 	view.StreamString(qw422016, p.Model.Name)
-//line views/vdb/Detail.html:32
+//line views/vdb/Detail.html:33
 	qw422016.N().S(`</strong></td>
-        </tr>
-        <tr>
-          <th class="shrink" title="String text">Icon</th>
-          <td>`)
-//line views/vdb/Detail.html:36
+          </tr>
+          <tr>
+            <th class="shrink" title="String text">Icon</th>
+            <td>`)
+//line views/vdb/Detail.html:37
 	view.StreamString(qw422016, p.Model.Icon)
-//line views/vdb/Detail.html:36
+//line views/vdb/Detail.html:37
 	qw422016.N().S(`</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="`)
-//line views/vdb/Detail.html:39
+          </tr>
+          <tr>
+            <th class="shrink" title="`)
+//line views/vdb/Detail.html:40
 	qw422016.E().S(db.AllEngines.Help())
-//line views/vdb/Detail.html:39
+//line views/vdb/Detail.html:40
 	qw422016.N().S(`">Engine</th>
-          <td>`)
-//line views/vdb/Detail.html:40
+            <td>`)
+//line views/vdb/Detail.html:41
 	qw422016.E().S(p.Model.Engine.String())
-//line views/vdb/Detail.html:40
+//line views/vdb/Detail.html:41
 	qw422016.N().S(`</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="String text">Server</th>
-          <td>`)
-//line views/vdb/Detail.html:44
+          </tr>
+          <tr>
+            <th class="shrink" title="String text">Server</th>
+            <td>`)
+//line views/vdb/Detail.html:45
 	view.StreamString(qw422016, p.Model.Server)
-//line views/vdb/Detail.html:44
+//line views/vdb/Detail.html:45
 	qw422016.N().S(`</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="Integer">Port</th>
-          <td>`)
-//line views/vdb/Detail.html:48
+          </tr>
+          <tr>
+            <th class="shrink" title="Integer">Port</th>
+            <td>`)
+//line views/vdb/Detail.html:49
 	qw422016.N().D(p.Model.Port)
-//line views/vdb/Detail.html:48
+//line views/vdb/Detail.html:49
 	qw422016.N().S(`</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="String text">Username</th>
-          <td>`)
-//line views/vdb/Detail.html:52
+          </tr>
+          <tr>
+            <th class="shrink" title="String text">Username</th>
+            <td>`)
+//line views/vdb/Detail.html:53
 	view.StreamString(qw422016, p.Model.Username)
-//line views/vdb/Detail.html:52
+//line views/vdb/Detail.html:53
 	qw422016.N().S(`</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="String text">Password</th>
-          <td>`)
-//line views/vdb/Detail.html:56
+          </tr>
+          <tr>
+            <th class="shrink" title="String text">Password</th>
+            <td>`)
+//line views/vdb/Detail.html:57
 	view.StreamString(qw422016, p.Model.Password)
-//line views/vdb/Detail.html:56
+//line views/vdb/Detail.html:57
 	qw422016.N().S(`</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="String text">Database</th>
-          <td>`)
-//line views/vdb/Detail.html:60
+          </tr>
+          <tr>
+            <th class="shrink" title="String text">Database</th>
+            <td>`)
+//line views/vdb/Detail.html:61
 	view.StreamString(qw422016, p.Model.Database)
-//line views/vdb/Detail.html:60
+//line views/vdb/Detail.html:61
 	qw422016.N().S(`</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="String text">Schema</th>
-          <td>`)
-//line views/vdb/Detail.html:64
+          </tr>
+          <tr>
+            <th class="shrink" title="String text">Schema</th>
+            <td>`)
+//line views/vdb/Detail.html:65
 	view.StreamString(qw422016, p.Model.Schema)
-//line views/vdb/Detail.html:64
+//line views/vdb/Detail.html:65
 	qw422016.N().S(`</td>
-        </tr>
-        <tr>
-          <th class="shrink" title="String text">Conn Override</th>
-          <td>`)
-//line views/vdb/Detail.html:68
+          </tr>
+          <tr>
+            <th class="shrink" title="String text">Conn Override</th>
+            <td>`)
+//line views/vdb/Detail.html:69
 	view.StreamString(qw422016, p.Model.ConnOverride)
-//line views/vdb/Detail.html:68
+//line views/vdb/Detail.html:69
 	qw422016.N().S(`</td>
-        </tr>
-      </tbody>
-    </table>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 `)
-//line views/vdb/Detail.html:74
+//line views/vdb/Detail.html:76
 	qw422016.N().S(`  `)
-//line views/vdb/Detail.html:75
+//line views/vdb/Detail.html:77
 	components.StreamJSONModal(qw422016, "connection", "Connection JSON", p.Model, 1)
-//line views/vdb/Detail.html:75
+//line views/vdb/Detail.html:77
 	qw422016.N().S(`
 `)
-//line views/vdb/Detail.html:76
+//line views/vdb/Detail.html:78
 }
 
-//line views/vdb/Detail.html:76
+//line views/vdb/Detail.html:78
 func (p *Detail) WriteBody(qq422016 qtio422016.Writer, as *app.State, ps *cutil.PageState) {
-//line views/vdb/Detail.html:76
+//line views/vdb/Detail.html:78
 	qw422016 := qt422016.AcquireWriter(qq422016)
-//line views/vdb/Detail.html:76
+//line views/vdb/Detail.html:78
 	p.StreamBody(qw422016, as, ps)
-//line views/vdb/Detail.html:76
+//line views/vdb/Detail.html:78
 	qt422016.ReleaseWriter(qw422016)
-//line views/vdb/Detail.html:76
+//line views/vdb/Detail.html:78
 }
 
-//line views/vdb/Detail.html:76
+//line views/vdb/Detail.html:78
 func (p *Detail) Body(as *app.State, ps *cutil.PageState) string {
-//line views/vdb/Detail.html:76
+//line views/vdb/Detail.html:78
 	qb422016 := qt422016.AcquireByteBuffer()
-//line views/vdb/Detail.html:76
+//line views/vdb/Detail.html:78
 	p.WriteBody(qb422016, as, ps)
-//line views/vdb/Detail.html:76
+//line views/vdb/Detail.html:78
 	qs422016 := string(qb422016.B)
-//line views/vdb/Detail.html:76
+//line views/vdb/Detail.html:78
 	qt422016.ReleaseByteBuffer(qb422016)
-//line views/vdb/Detail.html:76
+//line views/vdb/Detail.html:78
 	return qs422016
-//line views/vdb/Detail.html:76
+//line views/vdb/Detail.html:78
 }
