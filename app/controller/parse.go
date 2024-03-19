@@ -1,22 +1,22 @@
 package controller
 
 import (
-	"github.com/valyala/fasthttp"
+	"net/http"
 
 	"github.com/kyleu/dbaudit/app"
 	"github.com/kyleu/dbaudit/app/controller/cutil"
 	"github.com/kyleu/dbaudit/views/vparse"
 )
 
-func ParseForm(rc *fasthttp.RequestCtx) {
-	Act("parse.form", rc, func(as *app.State, ps *cutil.PageState) (string, error) {
-		return Render(rc, as, &vparse.SQLServer{Path: "/tmp/*.sqlaudit", Task: "testbed", Limit: 10}, ps)
+func ParseForm(w http.ResponseWriter, r *http.Request) {
+	Act("parse.form", w, r, func(as *app.State, ps *cutil.PageState) (string, error) {
+		return Render(w, r, as, &vparse.SQLServer{Path: "/tmp/*.sqlaudit", Task: "testbed", Limit: 10}, ps)
 	})
 }
 
-func Parse(rc *fasthttp.RequestCtx) {
-	Act("parse", rc, func(as *app.State, ps *cutil.PageState) (string, error) {
-		frm, err := cutil.ParseForm(rc)
+func Parse(w http.ResponseWriter, r *http.Request) {
+	Act("parse", w, r, func(as *app.State, ps *cutil.PageState) (string, error) {
+		frm, err := cutil.ParseForm(r, ps.RequestBody)
 		if err != nil {
 			return "", err
 		}
@@ -30,6 +30,6 @@ func Parse(rc *fasthttp.RequestCtx) {
 			return "", err
 		}
 
-		return Render(rc, as, &vparse.SQLServer{Path: path, Task: task, Limit: limit, Result: res}, ps)
+		return Render(w, r, as, &vparse.SQLServer{Path: path, Task: task, Limit: limit, Result: res}, ps)
 	})
 }

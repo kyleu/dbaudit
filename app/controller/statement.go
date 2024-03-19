@@ -3,10 +3,10 @@ package controller
 
 import (
 	"fmt"
+	"net/http"
 	"strings"
 
 	"github.com/pkg/errors"
-	"github.com/valyala/fasthttp"
 
 	"github.com/kyleu/dbaudit/app"
 	"github.com/kyleu/dbaudit/app/controller/cutil"
@@ -15,9 +15,9 @@ import (
 	"github.com/kyleu/dbaudit/views/vstatement"
 )
 
-func StatementList(rc *fasthttp.RequestCtx) {
-	Act("statement.list", rc, func(as *app.State, ps *cutil.PageState) (string, error) {
-		q := strings.TrimSpace(string(rc.URI().QueryArgs().Peek("q")))
+func StatementList(w http.ResponseWriter, r *http.Request) {
+	Act("statement.list", w, r, func(as *app.State, ps *cutil.PageState) (string, error) {
+		q := strings.TrimSpace(r.URL.Query().Get("q"))
 		prms := ps.Params.Get("statement", nil, ps.Logger).Sanitize("statement")
 		var ret statement.Statements
 		var err error
@@ -31,36 +31,36 @@ func StatementList(rc *fasthttp.RequestCtx) {
 		}
 		ps.SetTitleAndData("Statements", ret)
 		page := &vstatement.List{Models: ret, Params: ps.Params, SearchQuery: q}
-		return Render(rc, as, page, ps, "statement")
+		return Render(w, r, as, page, ps, "statement")
 	})
 }
 
-func StatementDetail(rc *fasthttp.RequestCtx) {
-	Act("statement.detail", rc, func(as *app.State, ps *cutil.PageState) (string, error) {
-		ret, err := statementFromPath(rc, as, ps)
+func StatementDetail(w http.ResponseWriter, r *http.Request) {
+	Act("statement.detail", w, r, func(as *app.State, ps *cutil.PageState) (string, error) {
+		ret, err := statementFromPath(r, as, ps)
 		if err != nil {
 			return "", err
 		}
 		ps.SetTitleAndData(ret.TitleString()+" (Statement)", ret)
 
-		return Render(rc, as, &vstatement.Detail{Model: ret}, ps, "statement", ret.TitleString()+"**database")
+		return Render(w, r, as, &vstatement.Detail{Model: ret}, ps, "statement", ret.TitleString()+"**database")
 	})
 }
 
-func StatementCreateForm(rc *fasthttp.RequestCtx) {
-	Act("statement.create.form", rc, func(as *app.State, ps *cutil.PageState) (string, error) {
+func StatementCreateForm(w http.ResponseWriter, r *http.Request) {
+	Act("statement.create.form", w, r, func(as *app.State, ps *cutil.PageState) (string, error) {
 		ret := &statement.Statement{}
-		if string(rc.QueryArgs().Peek("prototype")) == util.KeyRandom {
+		if r.URL.Query().Get("prototype") == util.KeyRandom {
 			ret = statement.Random()
 		}
 		ps.SetTitleAndData("Create [Statement]", ret)
 		ps.Data = ret
-		return Render(rc, as, &vstatement.Edit{Model: ret, IsNew: true}, ps, "statement", "Create")
+		return Render(w, r, as, &vstatement.Edit{Model: ret, IsNew: true}, ps, "statement", "Create")
 	})
 }
 
-func StatementRandom(rc *fasthttp.RequestCtx) {
-	Act("statement.random", rc, func(as *app.State, ps *cutil.PageState) (string, error) {
+func StatementRandom(w http.ResponseWriter, r *http.Request) {
+	Act("statement.random", w, r, func(as *app.State, ps *cutil.PageState) (string, error) {
 		ret, err := as.Services.Statement.Random(ps.Context, nil, ps.Logger)
 		if err != nil {
 			return "", errors.Wrap(err, "unable to find random Statement")
@@ -69,9 +69,9 @@ func StatementRandom(rc *fasthttp.RequestCtx) {
 	})
 }
 
-func StatementCreate(rc *fasthttp.RequestCtx) {
-	Act("statement.create", rc, func(as *app.State, ps *cutil.PageState) (string, error) {
-		ret, err := statementFromForm(rc, true)
+func StatementCreate(w http.ResponseWriter, r *http.Request) {
+	Act("statement.create", w, r, func(as *app.State, ps *cutil.PageState) (string, error) {
+		ret, err := statementFromForm(r, ps.RequestBody, true)
 		if err != nil {
 			return "", errors.Wrap(err, "unable to parse Statement from form")
 		}
@@ -80,28 +80,28 @@ func StatementCreate(rc *fasthttp.RequestCtx) {
 			return "", errors.Wrap(err, "unable to save newly-created Statement")
 		}
 		msg := fmt.Sprintf("Statement [%s] created", ret.String())
-		return FlashAndRedir(true, msg, ret.WebPath(), rc, ps)
+		return FlashAndRedir(true, msg, ret.WebPath(), w, ps)
 	})
 }
 
-func StatementEditForm(rc *fasthttp.RequestCtx) {
-	Act("statement.edit.form", rc, func(as *app.State, ps *cutil.PageState) (string, error) {
-		ret, err := statementFromPath(rc, as, ps)
+func StatementEditForm(w http.ResponseWriter, r *http.Request) {
+	Act("statement.edit.form", w, r, func(as *app.State, ps *cutil.PageState) (string, error) {
+		ret, err := statementFromPath(r, as, ps)
 		if err != nil {
 			return "", err
 		}
 		ps.SetTitleAndData("Edit "+ret.String(), ret)
-		return Render(rc, as, &vstatement.Edit{Model: ret}, ps, "statement", ret.String())
+		return Render(w, r, as, &vstatement.Edit{Model: ret}, ps, "statement", ret.String())
 	})
 }
 
-func StatementEdit(rc *fasthttp.RequestCtx) {
-	Act("statement.edit", rc, func(as *app.State, ps *cutil.PageState) (string, error) {
-		ret, err := statementFromPath(rc, as, ps)
+func StatementEdit(w http.ResponseWriter, r *http.Request) {
+	Act("statement.edit", w, r, func(as *app.State, ps *cutil.PageState) (string, error) {
+		ret, err := statementFromPath(r, as, ps)
 		if err != nil {
 			return "", err
 		}
-		frm, err := statementFromForm(rc, false)
+		frm, err := statementFromForm(r, ps.RequestBody, false)
 		if err != nil {
 			return "", errors.Wrap(err, "unable to parse Statement from form")
 		}
@@ -111,13 +111,13 @@ func StatementEdit(rc *fasthttp.RequestCtx) {
 			return "", errors.Wrapf(err, "unable to update Statement [%s]", frm.String())
 		}
 		msg := fmt.Sprintf("Statement [%s] updated", frm.String())
-		return FlashAndRedir(true, msg, frm.WebPath(), rc, ps)
+		return FlashAndRedir(true, msg, frm.WebPath(), w, ps)
 	})
 }
 
-func StatementDelete(rc *fasthttp.RequestCtx) {
-	Act("statement.delete", rc, func(as *app.State, ps *cutil.PageState) (string, error) {
-		ret, err := statementFromPath(rc, as, ps)
+func StatementDelete(w http.ResponseWriter, r *http.Request) {
+	Act("statement.delete", w, r, func(as *app.State, ps *cutil.PageState) (string, error) {
+		ret, err := statementFromPath(r, as, ps)
 		if err != nil {
 			return "", err
 		}
@@ -126,12 +126,12 @@ func StatementDelete(rc *fasthttp.RequestCtx) {
 			return "", errors.Wrapf(err, "unable to delete statement [%s]", ret.String())
 		}
 		msg := fmt.Sprintf("Statement [%s] deleted", ret.String())
-		return FlashAndRedir(true, msg, "/statement", rc, ps)
+		return FlashAndRedir(true, msg, "/statement", w, ps)
 	})
 }
 
-func statementFromPath(rc *fasthttp.RequestCtx, as *app.State, ps *cutil.PageState) (*statement.Statement, error) {
-	idArgStr, err := cutil.RCRequiredString(rc, "id", false)
+func statementFromPath(r *http.Request, as *app.State, ps *cutil.PageState) (*statement.Statement, error) {
+	idArgStr, err := cutil.RCRequiredString(r, "id", false)
 	if err != nil {
 		return nil, errors.Wrap(err, "must provide [id] as an argument")
 	}
@@ -143,8 +143,8 @@ func statementFromPath(rc *fasthttp.RequestCtx, as *app.State, ps *cutil.PageSta
 	return as.Services.Statement.Get(ps.Context, nil, idArg, ps.Logger)
 }
 
-func statementFromForm(rc *fasthttp.RequestCtx, setPK bool) (*statement.Statement, error) {
-	frm, err := cutil.ParseForm(rc)
+func statementFromForm(r *http.Request, b []byte, setPK bool) (*statement.Statement, error) {
+	frm, err := cutil.ParseForm(r, b)
 	if err != nil {
 		return nil, errors.Wrap(err, "unable to parse form")
 	}

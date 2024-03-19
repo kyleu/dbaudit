@@ -3,10 +3,10 @@ package controller
 
 import (
 	"fmt"
+	"net/http"
 	"strings"
 
 	"github.com/pkg/errors"
-	"github.com/valyala/fasthttp"
 
 	"github.com/kyleu/dbaudit/app"
 	"github.com/kyleu/dbaudit/app/controller/cutil"
@@ -15,9 +15,9 @@ import (
 	"github.com/kyleu/dbaudit/views/vdb"
 )
 
-func ConnectionList(rc *fasthttp.RequestCtx) {
-	Act("db.list", rc, func(as *app.State, ps *cutil.PageState) (string, error) {
-		q := strings.TrimSpace(string(rc.URI().QueryArgs().Peek("q")))
+func ConnectionList(w http.ResponseWriter, r *http.Request) {
+	Act("db.list", w, r, func(as *app.State, ps *cutil.PageState) (string, error) {
+		q := strings.TrimSpace(r.URL.Query().Get("q"))
 		prms := ps.Params.Get("db", nil, ps.Logger).Sanitize("db")
 		var ret db.Connections
 		var err error
@@ -31,36 +31,36 @@ func ConnectionList(rc *fasthttp.RequestCtx) {
 		}
 		ps.SetTitleAndData("Connections", ret)
 		page := &vdb.List{Models: ret, Params: ps.Params, SearchQuery: q}
-		return Render(rc, as, page, ps, "db")
+		return Render(w, r, as, page, ps, "db")
 	})
 }
 
-func ConnectionDetail(rc *fasthttp.RequestCtx) {
-	Act("db.detail", rc, func(as *app.State, ps *cutil.PageState) (string, error) {
-		ret, err := dbFromPath(rc, as, ps)
+func ConnectionDetail(w http.ResponseWriter, r *http.Request) {
+	Act("db.detail", w, r, func(as *app.State, ps *cutil.PageState) (string, error) {
+		ret, err := dbFromPath(r, as, ps)
 		if err != nil {
 			return "", err
 		}
 		ps.SetTitleAndData(ret.TitleString()+" (Connection)", ret)
 
-		return Render(rc, as, &vdb.Detail{Model: ret}, ps, "db", ret.TitleString()+"**database")
+		return Render(w, r, as, &vdb.Detail{Model: ret}, ps, "db", ret.TitleString()+"**database")
 	})
 }
 
-func ConnectionCreateForm(rc *fasthttp.RequestCtx) {
-	Act("db.create.form", rc, func(as *app.State, ps *cutil.PageState) (string, error) {
+func ConnectionCreateForm(w http.ResponseWriter, r *http.Request) {
+	Act("db.create.form", w, r, func(as *app.State, ps *cutil.PageState) (string, error) {
 		ret := &db.Connection{}
-		if string(rc.QueryArgs().Peek("prototype")) == util.KeyRandom {
+		if r.URL.Query().Get("prototype") == util.KeyRandom {
 			ret = db.Random()
 		}
 		ps.SetTitleAndData("Create [Connection]", ret)
 		ps.Data = ret
-		return Render(rc, as, &vdb.Edit{Model: ret, IsNew: true}, ps, "db", "Create")
+		return Render(w, r, as, &vdb.Edit{Model: ret, IsNew: true}, ps, "db", "Create")
 	})
 }
 
-func ConnectionRandom(rc *fasthttp.RequestCtx) {
-	Act("db.random", rc, func(as *app.State, ps *cutil.PageState) (string, error) {
+func ConnectionRandom(w http.ResponseWriter, r *http.Request) {
+	Act("db.random", w, r, func(as *app.State, ps *cutil.PageState) (string, error) {
 		ret, err := as.Services.Connection.Random(ps.Context, nil, ps.Logger)
 		if err != nil {
 			return "", errors.Wrap(err, "unable to find random Connection")
@@ -69,9 +69,9 @@ func ConnectionRandom(rc *fasthttp.RequestCtx) {
 	})
 }
 
-func ConnectionCreate(rc *fasthttp.RequestCtx) {
-	Act("db.create", rc, func(as *app.State, ps *cutil.PageState) (string, error) {
-		ret, err := dbFromForm(rc, true)
+func ConnectionCreate(w http.ResponseWriter, r *http.Request) {
+	Act("db.create", w, r, func(as *app.State, ps *cutil.PageState) (string, error) {
+		ret, err := dbFromForm(r, ps.RequestBody, true)
 		if err != nil {
 			return "", errors.Wrap(err, "unable to parse Connection from form")
 		}
@@ -80,28 +80,28 @@ func ConnectionCreate(rc *fasthttp.RequestCtx) {
 			return "", errors.Wrap(err, "unable to save newly-created Connection")
 		}
 		msg := fmt.Sprintf("Connection [%s] created", ret.String())
-		return FlashAndRedir(true, msg, ret.WebPath(), rc, ps)
+		return FlashAndRedir(true, msg, ret.WebPath(), w, ps)
 	})
 }
 
-func ConnectionEditForm(rc *fasthttp.RequestCtx) {
-	Act("db.edit.form", rc, func(as *app.State, ps *cutil.PageState) (string, error) {
-		ret, err := dbFromPath(rc, as, ps)
+func ConnectionEditForm(w http.ResponseWriter, r *http.Request) {
+	Act("db.edit.form", w, r, func(as *app.State, ps *cutil.PageState) (string, error) {
+		ret, err := dbFromPath(r, as, ps)
 		if err != nil {
 			return "", err
 		}
 		ps.SetTitleAndData("Edit "+ret.String(), ret)
-		return Render(rc, as, &vdb.Edit{Model: ret}, ps, "db", ret.String())
+		return Render(w, r, as, &vdb.Edit{Model: ret}, ps, "db", ret.String())
 	})
 }
 
-func ConnectionEdit(rc *fasthttp.RequestCtx) {
-	Act("db.edit", rc, func(as *app.State, ps *cutil.PageState) (string, error) {
-		ret, err := dbFromPath(rc, as, ps)
+func ConnectionEdit(w http.ResponseWriter, r *http.Request) {
+	Act("db.edit", w, r, func(as *app.State, ps *cutil.PageState) (string, error) {
+		ret, err := dbFromPath(r, as, ps)
 		if err != nil {
 			return "", err
 		}
-		frm, err := dbFromForm(rc, false)
+		frm, err := dbFromForm(r, ps.RequestBody, false)
 		if err != nil {
 			return "", errors.Wrap(err, "unable to parse Connection from form")
 		}
@@ -111,13 +111,13 @@ func ConnectionEdit(rc *fasthttp.RequestCtx) {
 			return "", errors.Wrapf(err, "unable to update Connection [%s]", frm.String())
 		}
 		msg := fmt.Sprintf("Connection [%s] updated", frm.String())
-		return FlashAndRedir(true, msg, frm.WebPath(), rc, ps)
+		return FlashAndRedir(true, msg, frm.WebPath(), w, ps)
 	})
 }
 
-func ConnectionDelete(rc *fasthttp.RequestCtx) {
-	Act("db.delete", rc, func(as *app.State, ps *cutil.PageState) (string, error) {
-		ret, err := dbFromPath(rc, as, ps)
+func ConnectionDelete(w http.ResponseWriter, r *http.Request) {
+	Act("db.delete", w, r, func(as *app.State, ps *cutil.PageState) (string, error) {
+		ret, err := dbFromPath(r, as, ps)
 		if err != nil {
 			return "", err
 		}
@@ -126,12 +126,12 @@ func ConnectionDelete(rc *fasthttp.RequestCtx) {
 			return "", errors.Wrapf(err, "unable to delete connection [%s]", ret.String())
 		}
 		msg := fmt.Sprintf("Connection [%s] deleted", ret.String())
-		return FlashAndRedir(true, msg, "/db", rc, ps)
+		return FlashAndRedir(true, msg, "/db", w, ps)
 	})
 }
 
-func dbFromPath(rc *fasthttp.RequestCtx, as *app.State, ps *cutil.PageState) (*db.Connection, error) {
-	idArgStr, err := cutil.RCRequiredString(rc, "id", false)
+func dbFromPath(r *http.Request, as *app.State, ps *cutil.PageState) (*db.Connection, error) {
+	idArgStr, err := cutil.RCRequiredString(r, "id", false)
 	if err != nil {
 		return nil, errors.Wrap(err, "must provide [id] as an argument")
 	}
@@ -143,8 +143,8 @@ func dbFromPath(rc *fasthttp.RequestCtx, as *app.State, ps *cutil.PageState) (*d
 	return as.Services.Connection.Get(ps.Context, nil, idArg, ps.Logger)
 }
 
-func dbFromForm(rc *fasthttp.RequestCtx, setPK bool) (*db.Connection, error) {
-	frm, err := cutil.ParseForm(rc)
+func dbFromForm(r *http.Request, b []byte, setPK bool) (*db.Connection, error) {
+	frm, err := cutil.ParseForm(r, b)
 	if err != nil {
 		return nil, errors.Wrap(err, "unable to parse form")
 	}

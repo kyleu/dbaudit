@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"github.com/valyala/fasthttp"
+	"net/http"
 
 	"github.com/kyleu/dbaudit/app"
 	"github.com/kyleu/dbaudit/app/controller/cutil"
@@ -9,9 +9,9 @@ import (
 	"github.com/kyleu/dbaudit/views/vstatement"
 )
 
-func StatementRun(rc *fasthttp.RequestCtx) {
-	Act("statement.run", rc, func(as *app.State, ps *cutil.PageState) (string, error) {
-		stmt, err := statementFromPath(rc, as, ps)
+func StatementRun(w http.ResponseWriter, r *http.Request) {
+	Act("statement.run", w, r, func(as *app.State, ps *cutil.PageState) (string, error) {
+		stmt, err := statementFromPath(r, as, ps)
 		if err != nil {
 			return "", err
 		}
@@ -42,6 +42,6 @@ func StatementRun(rc *fasthttp.RequestCtx) {
 		}
 
 		page := &vstatement.Result{Statement: stmt, Result: ret}
-		return Render(rc, as, page, ps, "statement", stmt.TitleString()+"**database", "Run**play")
+		return Render(w, r, as, page, ps, "statement", stmt.TitleString()+"**database", "Run**play")
 	})
 }

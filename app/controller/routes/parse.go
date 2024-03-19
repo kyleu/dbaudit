@@ -1,12 +1,14 @@
 package routes
 
 import (
-	"github.com/fasthttp/router"
+	"net/http"
+
+	"github.com/gorilla/mux"
 
 	"github.com/kyleu/dbaudit/app/controller"
 )
 
-func parseRoutes(r *router.Router) {
-	r.GET("/parse", controller.ParseForm)
-	r.POST("/parse", controller.Parse)
+func parseRoutes(r *mux.Router) {
+	makeRoute(r, http.MethodGet, "/parse", controller.ParseForm)
+	makeRoute(r, http.MethodPost, "/parse", controller.Parse)
 }
