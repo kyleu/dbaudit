@@ -19,7 +19,7 @@ func generatedSearch() []Provider {
 		if !page.Admin {
 			return nil, nil
 		}
-		prm := params.PS.Get("db", nil, logger).Sanitize("db").WithLimit(5)
+		prm := params.PS.Sanitized("db", logger).WithLimit(5)
 		models, err := as.Services.Connection.Search(ctx, params.Q, nil, prm, logger)
 		if err != nil {
 			return nil, err
@@ -32,7 +32,7 @@ func generatedSearch() []Provider {
 		if !page.Admin {
 			return nil, nil
 		}
-		prm := params.PS.Get("statement", nil, logger).Sanitize("statement").WithLimit(5)
+		prm := params.PS.Sanitized("statement", logger).WithLimit(5)
 		models, err := as.Services.Statement.Search(ctx, params.Q, nil, prm, logger)
 		if err != nil {
 			return nil, err

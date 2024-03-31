@@ -9,7 +9,7 @@
 ) %}
 
 {% func Table(models db.Connections, params filter.ParamSet, as *app.State, ps *cutil.PageState) %}
-  {%- code prms := params.Get("db", nil, ps.Logger).Sanitize("db") -%}
+  {%- code prms := params.Sanitized("db", ps.Logger) -%}
   <table>
     <thead>
       <tr>

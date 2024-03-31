@@ -18,16 +18,22 @@ import (
 func StatementList(w http.ResponseWriter, r *http.Request) {
 	Act("statement.list", w, r, func(as *app.State, ps *cutil.PageState) (string, error) {
 		q := strings.TrimSpace(r.URL.Query().Get("q"))
-		prms := ps.Params.Get("statement", nil, ps.Logger).Sanitize("statement")
+		prms := ps.Params.Sanitized("statement", ps.Logger)
 		var ret statement.Statements
 		var err error
 		if q == "" {
 			ret, err = as.Services.Statement.List(ps.Context, nil, prms, ps.Logger)
+			if err != nil {
+				return "", err
+			}
 		} else {
 			ret, err = as.Services.Statement.Search(ps.Context, q, nil, prms, ps.Logger)
-		}
-		if err != nil {
-			return "", err
+			if err != nil {
+				return "", err
+			}
+			if len(ret) == 1 {
+				return FlashAndRedir(true, "single result found", ret[0].WebPath(), w, ps)
+			}
 		}
 		ps.SetTitleAndData("Statements", ret)
 		page := &vstatement.List{Models: ret, Params: ps.Params, SearchQuery: q}
