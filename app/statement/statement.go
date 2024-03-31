@@ -75,7 +75,7 @@ func Random() *Statement {
 
 //nolint:lll
 func (s *Statement) Strings() []string {
-	return []string{s.ID.String(), fmt.Sprint(s.SessionID), s.Action.String(), fmt.Sprint(s.Succeeded), s.Principal, s.Database, s.Filename, s.Host, fmt.Sprint(s.TransactionID), s.ClientIP, fmt.Sprint(s.Duration), s.ConnectionID.String(), fmt.Sprint(s.RowsAffected), fmt.Sprint(s.RowsReturned), s.SQL, s.Types.String(), s.Values.String(), util.TimeToFull(&s.Occurred)}
+	return []string{s.ID.String(), fmt.Sprint(s.SessionID), s.Action.String(), fmt.Sprint(s.Succeeded), s.Principal, s.Database, s.Filename, s.Host, fmt.Sprint(s.TransactionID), s.ClientIP, fmt.Sprint(s.Duration), s.ConnectionID.String(), fmt.Sprint(s.RowsAffected), fmt.Sprint(s.RowsReturned), s.SQL, util.ToJSON(s.Types), util.ToJSON(s.Values), util.TimeToFull(&s.Occurred)}
 }
 
 func (s *Statement) ToCSV() ([]string, [][]string) {
