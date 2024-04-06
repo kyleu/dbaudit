@@ -10,33 +10,35 @@
 
 {% func Table(models db.Connections, params filter.ParamSet, as *app.State, ps *cutil.PageState) %}
   {%- code prms := params.Sanitized("db", ps.Logger) -%}
-  <table>
-    <thead>
-      <tr>
-        {%= components.TableHeaderSimple("db", "id", "ID", "UUID in format (00000000-0000-0000-0000-000000000000)", prms, ps.URI, ps) %}
-        {%= components.TableHeaderSimple("db", "name", "Name", "String text", prms, ps.URI, ps) %}
-        {%= components.TableHeaderSimple("db", "icon", "Icon", "String text", prms, ps.URI, ps) %}
-        {%= components.TableHeaderSimple("db", "engine", "Engine", db.AllEngines.Help(), prms, ps.URI, ps) %}
-        {%= components.TableHeaderSimple("db", "server", "Server", "String text", prms, ps.URI, ps) %}
-        {%= components.TableHeaderSimple("db", "database", "Database", "String text", prms, ps.URI, ps) %}
-      </tr>
-    </thead>
-    <tbody>
-      {%- for _, model := range models -%}
-      <tr>
-        <td><a href="/db/{%= view.UUID(&model.ID) %}">{%= view.UUID(&model.ID) %}</a></td>
-        <td><strong>{%= view.String(model.Name) %}</strong></td>
-        <td>{%= view.String(model.Icon) %}</td>
-        <td>{%s model.Engine.String() %}</td>
-        <td>{%= view.String(model.Server) %}</td>
-        <td>{%= view.String(model.Database) %}</td>
-      </tr>
-      {%- endfor -%}
-      {%- if prms.HasNextPage(len(models) + prms.Offset) || prms.HasPreviousPage() -%}
-      <tr>
-        <td colspan="6">{%= components.Pagination(len(models) + prms.Offset, prms, ps.URI) %}</td>
-      </tr>
-      {%- endif -%}
-    </tbody>
-  </table>
+  <div class="overflow clear">
+    <table>
+      <thead>
+        <tr>
+          {%= components.TableHeaderSimple("db", "id", "ID", "UUID in format (00000000-0000-0000-0000-000000000000)", prms, ps.URI, ps) %}
+          {%= components.TableHeaderSimple("db", "name", "Name", "String text", prms, ps.URI, ps) %}
+          {%= components.TableHeaderSimple("db", "icon", "Icon", "String text", prms, ps.URI, ps) %}
+          {%= components.TableHeaderSimple("db", "engine", "Engine", db.AllEngines.Help(), prms, ps.URI, ps) %}
+          {%= components.TableHeaderSimple("db", "server", "Server", "String text", prms, ps.URI, ps) %}
+          {%= components.TableHeaderSimple("db", "database", "Database", "String text", prms, ps.URI, ps) %}
+        </tr>
+      </thead>
+      <tbody>
+        {%- for _, model := range models -%}
+        <tr>
+          <td><a href="/db/{%= view.UUID(&model.ID) %}">{%= view.UUID(&model.ID) %}</a></td>
+          <td><strong>{%= view.String(model.Name) %}</strong></td>
+          <td>{%= view.String(model.Icon) %}</td>
+          <td>{%s model.Engine.String() %}</td>
+          <td>{%= view.String(model.Server) %}</td>
+          <td>{%= view.String(model.Database) %}</td>
+        </tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
+  </div>
+  {%- if prms.HasNextPage(len(models) + prms.Offset) || prms.HasPreviousPage() -%}
+  <hr />
+  {%= components.Pagination(len(models) + prms.Offset, prms, ps.URI) %}
+  <div class="clear"></div>
+  {%- endif -%}
 {% endfunc %}
