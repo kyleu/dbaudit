@@ -38,127 +38,129 @@ func StreamTable(qw422016 *qt422016.Writer, models db.Connections, params filter
 	prms := params.Sanitized("db", ps.Logger)
 
 //line views/vdb/Table.html:12
-	qw422016.N().S(`  <table>
-    <thead>
-      <tr>
-        `)
-//line views/vdb/Table.html:16
+	qw422016.N().S(`  <div class="overflow clear">
+    <table>
+      <thead>
+        <tr>
+          `)
+//line views/vdb/Table.html:17
 	components.StreamTableHeaderSimple(qw422016, "db", "id", "ID", "UUID in format (00000000-0000-0000-0000-000000000000)", prms, ps.URI, ps)
-//line views/vdb/Table.html:16
-	qw422016.N().S(`
-        `)
 //line views/vdb/Table.html:17
+	qw422016.N().S(`
+          `)
+//line views/vdb/Table.html:18
 	components.StreamTableHeaderSimple(qw422016, "db", "name", "Name", "String text", prms, ps.URI, ps)
-//line views/vdb/Table.html:17
-	qw422016.N().S(`
-        `)
 //line views/vdb/Table.html:18
+	qw422016.N().S(`
+          `)
+//line views/vdb/Table.html:19
 	components.StreamTableHeaderSimple(qw422016, "db", "icon", "Icon", "String text", prms, ps.URI, ps)
-//line views/vdb/Table.html:18
-	qw422016.N().S(`
-        `)
 //line views/vdb/Table.html:19
+	qw422016.N().S(`
+          `)
+//line views/vdb/Table.html:20
 	components.StreamTableHeaderSimple(qw422016, "db", "engine", "Engine", db.AllEngines.Help(), prms, ps.URI, ps)
-//line views/vdb/Table.html:19
-	qw422016.N().S(`
-        `)
 //line views/vdb/Table.html:20
+	qw422016.N().S(`
+          `)
+//line views/vdb/Table.html:21
 	components.StreamTableHeaderSimple(qw422016, "db", "server", "Server", "String text", prms, ps.URI, ps)
-//line views/vdb/Table.html:20
-	qw422016.N().S(`
-        `)
 //line views/vdb/Table.html:21
+	qw422016.N().S(`
+          `)
+//line views/vdb/Table.html:22
 	components.StreamTableHeaderSimple(qw422016, "db", "database", "Database", "String text", prms, ps.URI, ps)
-//line views/vdb/Table.html:21
+//line views/vdb/Table.html:22
 	qw422016.N().S(`
-      </tr>
-    </thead>
-    <tbody>
+        </tr>
+      </thead>
+      <tbody>
 `)
-//line views/vdb/Table.html:25
+//line views/vdb/Table.html:26
 	for _, model := range models {
-//line views/vdb/Table.html:25
-		qw422016.N().S(`      <tr>
-        <td><a href="/db/`)
-//line views/vdb/Table.html:27
+//line views/vdb/Table.html:26
+		qw422016.N().S(`        <tr>
+          <td><a href="/db/`)
+//line views/vdb/Table.html:28
 		view.StreamUUID(qw422016, &model.ID)
-//line views/vdb/Table.html:27
+//line views/vdb/Table.html:28
 		qw422016.N().S(`">`)
-//line views/vdb/Table.html:27
+//line views/vdb/Table.html:28
 		view.StreamUUID(qw422016, &model.ID)
-//line views/vdb/Table.html:27
+//line views/vdb/Table.html:28
 		qw422016.N().S(`</a></td>
-        <td><strong>`)
-//line views/vdb/Table.html:28
+          <td><strong>`)
+//line views/vdb/Table.html:29
 		view.StreamString(qw422016, model.Name)
-//line views/vdb/Table.html:28
+//line views/vdb/Table.html:29
 		qw422016.N().S(`</strong></td>
-        <td>`)
-//line views/vdb/Table.html:29
+          <td>`)
+//line views/vdb/Table.html:30
 		view.StreamString(qw422016, model.Icon)
-//line views/vdb/Table.html:29
-		qw422016.N().S(`</td>
-        <td>`)
 //line views/vdb/Table.html:30
+		qw422016.N().S(`</td>
+          <td>`)
+//line views/vdb/Table.html:31
 		qw422016.E().S(model.Engine.String())
-//line views/vdb/Table.html:30
-		qw422016.N().S(`</td>
-        <td>`)
 //line views/vdb/Table.html:31
+		qw422016.N().S(`</td>
+          <td>`)
+//line views/vdb/Table.html:32
 		view.StreamString(qw422016, model.Server)
-//line views/vdb/Table.html:31
-		qw422016.N().S(`</td>
-        <td>`)
 //line views/vdb/Table.html:32
+		qw422016.N().S(`</td>
+          <td>`)
+//line views/vdb/Table.html:33
 		view.StreamString(qw422016, model.Database)
-//line views/vdb/Table.html:32
+//line views/vdb/Table.html:33
 		qw422016.N().S(`</td>
-      </tr>
+        </tr>
 `)
-//line views/vdb/Table.html:34
+//line views/vdb/Table.html:35
 	}
 //line views/vdb/Table.html:35
+	qw422016.N().S(`      </tbody>
+    </table>
+  </div>
+`)
+//line views/vdb/Table.html:39
 	if prms.HasNextPage(len(models)+prms.Offset) || prms.HasPreviousPage() {
-//line views/vdb/Table.html:35
-		qw422016.N().S(`      <tr>
-        <td colspan="6">`)
-//line views/vdb/Table.html:37
+//line views/vdb/Table.html:39
+		qw422016.N().S(`  <hr />
+  `)
+//line views/vdb/Table.html:41
 		components.StreamPagination(qw422016, len(models)+prms.Offset, prms, ps.URI)
-//line views/vdb/Table.html:37
-		qw422016.N().S(`</td>
-      </tr>
+//line views/vdb/Table.html:41
+		qw422016.N().S(`
+  <div class="clear"></div>
 `)
-//line views/vdb/Table.html:39
+//line views/vdb/Table.html:43
 	}
-//line views/vdb/Table.html:39
-	qw422016.N().S(`    </tbody>
-  </table>
-`)
-//line views/vdb/Table.html:42
+//line views/vdb/Table.html:44
 }
 
-//line views/vdb/Table.html:42
+//line views/vdb/Table.html:44
 func WriteTable(qq422016 qtio422016.Writer, models db.Connections, params filter.ParamSet, as *app.State, ps *cutil.PageState) {
-//line views/vdb/Table.html:42
+//line views/vdb/Table.html:44
 	qw422016 := qt422016.AcquireWriter(qq422016)
-//line views/vdb/Table.html:42
+//line views/vdb/Table.html:44
 	StreamTable(qw422016, models, params, as, ps)
-//line views/vdb/Table.html:42
+//line views/vdb/Table.html:44
 	qt422016.ReleaseWriter(qw422016)
-//line views/vdb/Table.html:42
+//line views/vdb/Table.html:44
 }
 
-//line views/vdb/Table.html:42
+//line views/vdb/Table.html:44
 func Table(models db.Connections, params filter.ParamSet, as *app.State, ps *cutil.PageState) string {
-//line views/vdb/Table.html:42
+//line views/vdb/Table.html:44
 	qb422016 := qt422016.AcquireByteBuffer()
-//line views/vdb/Table.html:42
+//line views/vdb/Table.html:44
 	WriteTable(qb422016, models, params, as, ps)
-//line views/vdb/Table.html:42
+//line views/vdb/Table.html:44
 	qs422016 := string(qb422016.B)
-//line views/vdb/Table.html:42
+//line views/vdb/Table.html:44
 	qt422016.ReleaseByteBuffer(qb422016)
-//line views/vdb/Table.html:42
+//line views/vdb/Table.html:44
 	return qs422016
-//line views/vdb/Table.html:42
+//line views/vdb/Table.html:44
 }
