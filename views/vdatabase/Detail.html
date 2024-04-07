@@ -104,20 +104,25 @@
   <div class="card">
     <h3>Table Sizes</h3>
     <div class="overflow full-width">
-      <table>
+      <table class="min-200">
         <thead>
-        <tr>
-          <th>Name</th>
-          <th title="(estimated)">Rows*</th>
-        </tr>
+          <tr>
+            <th class="shrink">Name</th>
+            <th title="(estimated)">Rows*</th>
+            <th>Actions</th>
+          </tr>
         </thead>
         <tbody>
-        {%- for _, size := range sizes -%}
-        <tr>
-          <td><a href="/admin/database/{%s key %}/tables/{%s size.Schema %}/{%s size.Name %}">{%s size.Name %}</a></td>
-          <td>{%s size.Rows %}</td>
-        </tr>
-        {%- endfor -%}
+          {%- for _, size := range sizes -%}
+          <tr>
+            <td>{%s size.Name %}</td>
+            <td>{%s size.Rows %}</td>
+            <td style="white-space: nowrap;">
+              <a href="/admin/database/{%s key %}/tables/{%s size.Schema %}/{%s size.Name %}"><button>Data</button></a>
+              <a href="/admin/database/{%s key %}/tables/{%s size.Schema %}/{%s size.Name %}/stats"><button>Stats</button></a>
+            </td>
+          </tr>
+          {%- endfor -%}
         </tbody>
       </table>
     </div>
