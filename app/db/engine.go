@@ -13,6 +13,15 @@ import (
 	"github.com/kyleu/dbaudit/app/util"
 )
 
+var (
+	EnginePostgres = Engine{Key: "postgres", Name: "PostgreSQL"}
+	EngineMysql    = Engine{Key: "mysql", Name: "MySQL"}
+	EngineMssql    = Engine{Key: "mssql", Name: "Microsoft SQL Server"}
+	EngineSqlite   = Engine{Key: "sqlite", Name: "SQLite"}
+
+	AllEngines = Engines{EnginePostgres, EngineMysql, EngineMssql, EngineSqlite}
+)
+
 type Engine struct {
 	Key         string
 	Name        string
@@ -126,12 +135,3 @@ func (e Engines) GetByName(name string, logger util.Logger) Engine {
 func (e Engines) Random() Engine {
 	return e[util.RandomInt(len(e))]
 }
-
-var (
-	EnginePostgres = Engine{Key: "postgres", Name: "PostgreSQL"}
-	EngineMysql    = Engine{Key: "mysql", Name: "MySQL"}
-	EngineMssql    = Engine{Key: "mssql", Name: "Microsoft SQL Server"}
-	EngineSqlite   = Engine{Key: "sqlite", Name: "SQLite"}
-
-	AllEngines = Engines{EnginePostgres, EngineMysql, EngineMssql, EngineSqlite}
-)

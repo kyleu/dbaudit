@@ -13,6 +13,15 @@ import (
 	"github.com/kyleu/dbaudit/app/util"
 )
 
+var (
+	ActionProcStart    = Action{Key: "proc_start", Name: "Procedure Started"}
+	ActionProcComplete = Action{Key: "proc_complete", Name: "Procedure Complete"}
+	ActionHealthcheck  = Action{Key: "healthcheck", Name: "Healthcheck"}
+	ActionUnknown      = Action{Key: "unknown", Name: "Unknown"}
+
+	AllActions = Actions{ActionProcStart, ActionProcComplete, ActionHealthcheck, ActionUnknown}
+)
+
 type Action struct {
 	Key         string
 	Name        string
@@ -126,12 +135,3 @@ func (a Actions) GetByName(name string, logger util.Logger) Action {
 func (a Actions) Random() Action {
 	return a[util.RandomInt(len(a))]
 }
-
-var (
-	ActionProcStart    = Action{Key: "proc_start", Name: "Procedure Started"}
-	ActionProcComplete = Action{Key: "proc_complete", Name: "Procedure Complete"}
-	ActionHealthcheck  = Action{Key: "healthcheck", Name: "Healthcheck"}
-	ActionUnknown      = Action{Key: "unknown", Name: "Unknown"}
-
-	AllActions = Actions{ActionProcStart, ActionProcComplete, ActionHealthcheck, ActionUnknown}
-)
