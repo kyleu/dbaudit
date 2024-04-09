@@ -36,6 +36,10 @@ func (a Action) String() string {
 	return a.Key
 }
 
+func (a Action) Matches(xx Action) bool {
+	return a.Key == xx.Key
+}
+
 func (a Action) MarshalJSON() ([]byte, error) {
 	return util.ToJSONBytes(a.Key, false), nil
 }

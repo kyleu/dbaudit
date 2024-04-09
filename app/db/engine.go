@@ -36,6 +36,10 @@ func (e Engine) String() string {
 	return e.Key
 }
 
+func (e Engine) Matches(xx Engine) bool {
+	return e.Key == xx.Key
+}
+
 func (e Engine) MarshalJSON() ([]byte, error) {
 	return util.ToJSONBytes(e.Key, false), nil
 }
