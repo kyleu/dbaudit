@@ -2,8 +2,16 @@
 package statement
 
 import (
+	"github.com/google/uuid"
+
 	"github.com/kyleu/dbaudit/app/lib/database"
 	"github.com/kyleu/dbaudit/app/lib/filter"
+	"github.com/kyleu/dbaudit/app/lib/svc"
+)
+
+var (
+	_ svc.ServiceID[*Statement, Statements, uuid.UUID] = (*Service)(nil)
+	_ svc.ServiceSearch[Statements]                    = (*Service)(nil)
 )
 
 type Service struct {

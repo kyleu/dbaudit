@@ -6,8 +6,11 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/kyleu/dbaudit/app/lib/svc"
 	"github.com/kyleu/dbaudit/app/util"
 )
+
+var _ svc.Model = (*Connection)(nil)
 
 type Connection struct {
 	ID           uuid.UUID `json:"id,omitempty"`

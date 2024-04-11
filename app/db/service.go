@@ -2,8 +2,16 @@
 package db
 
 import (
+	"github.com/google/uuid"
+
 	"github.com/kyleu/dbaudit/app/lib/database"
 	"github.com/kyleu/dbaudit/app/lib/filter"
+	"github.com/kyleu/dbaudit/app/lib/svc"
+)
+
+var (
+	_ svc.ServiceID[*Connection, Connections, uuid.UUID] = (*Service)(nil)
+	_ svc.ServiceSearch[Connections]                     = (*Service)(nil)
 )
 
 type Service struct {
