@@ -182,7 +182,7 @@ func (p *Detail) StreamBody(qw422016 *qt422016.Writer, as *app.State, ps *cutil.
 	qw422016.N().S(`</td>
           </tr>
           <tr>
-            <th class="shrink" title="String text">SQL</th>
+            <th class="shrink" title="SQL code">SQL</th>
             <td>`)
 //line views/vstatement/Detail.html:85
 	view.StreamFormat(qw422016, p.Model.SQL, "sql")

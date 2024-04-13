@@ -42,7 +42,7 @@
           {%= edit.UUIDTable("connectionID", "", "Connection ID", &p.Model.ConnectionID, 5, "UUID in format (00000000-0000-0000-0000-000000000000)") %}
           {%= edit.IntTable("rowsAffected", "", "Rows Affected", p.Model.RowsAffected, 5, "Integer") %}
           {%= edit.IntTable("rowsReturned", "", "Rows Returned", p.Model.RowsReturned, 5, "Integer") %}
-          {%= edit.TextareaTable("sql", "", "SQL", 8, p.Model.SQL, 5, "String text") %}
+          {%= edit.TextareaTable("sql", "", "SQL", 8, p.Model.SQL, 5, "SQL code") %}
           {%= edit.TextareaTable("types", "", "Types", 8, util.ToJSON(p.Model.Types), 5, "JSON object") %}
           {%= edit.TextareaTable("values", "", "Values", 8, util.ToJSON(p.Model.Values), 5, "JSON object") %}
           {%= edit.TimestampTable("occurred", "", "Occurred", &p.Model.Occurred, 5, "Date and time, in almost any format") %}

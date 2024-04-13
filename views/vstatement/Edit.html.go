@@ -158,7 +158,7 @@ func (p *Edit) StreamBody(qw422016 *qt422016.Writer, as *app.State, ps *cutil.Pa
 	qw422016.N().S(`
           `)
 //line views/vstatement/Edit.html:45
-	edit.StreamTextareaTable(qw422016, "sql", "", "SQL", 8, p.Model.SQL, 5, "String text")
+	edit.StreamTextareaTable(qw422016, "sql", "", "SQL", 8, p.Model.SQL, 5, "SQL code")
 //line views/vstatement/Edit.html:45
 	qw422016.N().S(`
           `)
