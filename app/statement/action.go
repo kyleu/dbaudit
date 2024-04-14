@@ -107,7 +107,7 @@ func (a Actions) Strings() []string {
 }
 
 func (a Actions) Help() string {
-	return "Available options: [" + strings.Join(a.Strings(), ", ") + "]"
+	return "Available action options: [" + strings.Join(a.Strings(), ", ") + "]"
 }
 
 func (a Actions) Get(key string, logger util.Logger) Action {

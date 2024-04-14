@@ -107,7 +107,7 @@ func (e Engines) Strings() []string {
 }
 
 func (e Engines) Help() string {
-	return "Available options: [" + strings.Join(e.Strings(), ", ") + "]"
+	return "Available engine options: [" + strings.Join(e.Strings(), ", ") + "]"
 }
 
 func (e Engines) Get(key string, logger util.Logger) Engine {
