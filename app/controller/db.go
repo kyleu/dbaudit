@@ -32,12 +32,12 @@ func ConnectionList(w http.ResponseWriter, r *http.Request) {
 				return "", err
 			}
 			if len(ret) == 1 {
-				return FlashAndRedir(true, "single result found", ret[0].WebPath(), w, ps)
+				return FlashAndRedir(true, "single result found", ret[0].WebPath(), ps)
 			}
 		}
 		ps.SetTitleAndData("Connections", ret)
 		page := &vdb.List{Models: ret, Params: ps.Params, SearchQuery: q}
-		return Render(w, r, as, page, ps, "db")
+		return Render(r, as, page, ps, "db")
 	})
 }
 
@@ -49,7 +49,7 @@ func ConnectionDetail(w http.ResponseWriter, r *http.Request) {
 		}
 		ps.SetTitleAndData(ret.TitleString()+" (Connection)", ret)
 
-		return Render(w, r, as, &vdb.Detail{Model: ret}, ps, "db", ret.TitleString()+"**database")
+		return Render(r, as, &vdb.Detail{Model: ret}, ps, "db", ret.TitleString()+"**database")
 	})
 }
 
@@ -61,7 +61,7 @@ func ConnectionCreateForm(w http.ResponseWriter, r *http.Request) {
 		}
 		ps.SetTitleAndData("Create [Connection]", ret)
 		ps.Data = ret
-		return Render(w, r, as, &vdb.Edit{Model: ret, IsNew: true}, ps, "db", "Create")
+		return Render(r, as, &vdb.Edit{Model: ret, IsNew: true}, ps, "db", "Create")
 	})
 }
 
@@ -86,7 +86,7 @@ func ConnectionCreate(w http.ResponseWriter, r *http.Request) {
 			return "", errors.Wrap(err, "unable to save newly-created Connection")
 		}
 		msg := fmt.Sprintf("Connection [%s] created", ret.String())
-		return FlashAndRedir(true, msg, ret.WebPath(), w, ps)
+		return FlashAndRedir(true, msg, ret.WebPath(), ps)
 	})
 }
 
@@ -97,7 +97,7 @@ func ConnectionEditForm(w http.ResponseWriter, r *http.Request) {
 			return "", err
 		}
 		ps.SetTitleAndData("Edit "+ret.String(), ret)
-		return Render(w, r, as, &vdb.Edit{Model: ret}, ps, "db", ret.String())
+		return Render(r, as, &vdb.Edit{Model: ret}, ps, "db", ret.String())
 	})
 }
 
@@ -117,7 +117,7 @@ func ConnectionEdit(w http.ResponseWriter, r *http.Request) {
 			return "", errors.Wrapf(err, "unable to update Connection [%s]", frm.String())
 		}
 		msg := fmt.Sprintf("Connection [%s] updated", frm.String())
-		return FlashAndRedir(true, msg, frm.WebPath(), w, ps)
+		return FlashAndRedir(true, msg, frm.WebPath(), ps)
 	})
 }
 
@@ -132,7 +132,7 @@ func ConnectionDelete(w http.ResponseWriter, r *http.Request) {
 			return "", errors.Wrapf(err, "unable to delete connection [%s]", ret.String())
 		}
 		msg := fmt.Sprintf("Connection [%s] deleted", ret.String())
-		return FlashAndRedir(true, msg, "/db", w, ps)
+		return FlashAndRedir(true, msg, "/db", ps)
 	})
 }
 

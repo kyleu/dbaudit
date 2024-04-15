@@ -10,7 +10,7 @@ import (
 
 func ParseForm(w http.ResponseWriter, r *http.Request) {
 	Act("parse.form", w, r, func(as *app.State, ps *cutil.PageState) (string, error) {
-		return Render(w, r, as, &vparse.SQLServer{Path: "/tmp/*.sqlaudit", Task: "testbed", Limit: 10}, ps)
+		return Render(r, as, &vparse.SQLServer{Path: "/tmp/*.sqlaudit", Task: "testbed", Limit: 10}, ps)
 	})
 }
 
@@ -30,6 +30,6 @@ func Parse(w http.ResponseWriter, r *http.Request) {
 			return "", err
 		}
 
-		return Render(w, r, as, &vparse.SQLServer{Path: path, Task: task, Limit: limit, Result: res}, ps)
+		return Render(r, as, &vparse.SQLServer{Path: path, Task: task, Limit: limit, Result: res}, ps)
 	})
 }

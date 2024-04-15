@@ -42,6 +42,6 @@ func StatementRun(w http.ResponseWriter, r *http.Request) {
 		}
 
 		page := &vstatement.Result{Statement: stmt, Result: ret}
-		return Render(w, r, as, page, ps, "statement", stmt.TitleString()+"**database", "Run**play")
+		return Render(r, as, page, ps, "statement", stmt.TitleString()+"**database", "Run**play")
 	})
 }

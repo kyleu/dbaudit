@@ -32,12 +32,12 @@ func StatementList(w http.ResponseWriter, r *http.Request) {
 				return "", err
 			}
 			if len(ret) == 1 {
-				return FlashAndRedir(true, "single result found", ret[0].WebPath(), w, ps)
+				return FlashAndRedir(true, "single result found", ret[0].WebPath(), ps)
 			}
 		}
 		ps.SetTitleAndData("Statements", ret)
 		page := &vstatement.List{Models: ret, Params: ps.Params, SearchQuery: q}
-		return Render(w, r, as, page, ps, "statement")
+		return Render(r, as, page, ps, "statement")
 	})
 }
 
@@ -49,7 +49,7 @@ func StatementDetail(w http.ResponseWriter, r *http.Request) {
 		}
 		ps.SetTitleAndData(ret.TitleString()+" (Statement)", ret)
 
-		return Render(w, r, as, &vstatement.Detail{Model: ret}, ps, "statement", ret.TitleString()+"**database")
+		return Render(r, as, &vstatement.Detail{Model: ret}, ps, "statement", ret.TitleString()+"**database")
 	})
 }
 
@@ -61,7 +61,7 @@ func StatementCreateForm(w http.ResponseWriter, r *http.Request) {
 		}
 		ps.SetTitleAndData("Create [Statement]", ret)
 		ps.Data = ret
-		return Render(w, r, as, &vstatement.Edit{Model: ret, IsNew: true}, ps, "statement", "Create")
+		return Render(r, as, &vstatement.Edit{Model: ret, IsNew: true}, ps, "statement", "Create")
 	})
 }
 
@@ -86,7 +86,7 @@ func StatementCreate(w http.ResponseWriter, r *http.Request) {
 			return "", errors.Wrap(err, "unable to save newly-created Statement")
 		}
 		msg := fmt.Sprintf("Statement [%s] created", ret.String())
-		return FlashAndRedir(true, msg, ret.WebPath(), w, ps)
+		return FlashAndRedir(true, msg, ret.WebPath(), ps)
 	})
 }
 
@@ -97,7 +97,7 @@ func StatementEditForm(w http.ResponseWriter, r *http.Request) {
 			return "", err
 		}
 		ps.SetTitleAndData("Edit "+ret.String(), ret)
-		return Render(w, r, as, &vstatement.Edit{Model: ret}, ps, "statement", ret.String())
+		return Render(r, as, &vstatement.Edit{Model: ret}, ps, "statement", ret.String())
 	})
 }
 
@@ -117,7 +117,7 @@ func StatementEdit(w http.ResponseWriter, r *http.Request) {
 			return "", errors.Wrapf(err, "unable to update Statement [%s]", frm.String())
 		}
 		msg := fmt.Sprintf("Statement [%s] updated", frm.String())
-		return FlashAndRedir(true, msg, frm.WebPath(), w, ps)
+		return FlashAndRedir(true, msg, frm.WebPath(), ps)
 	})
 }
 
@@ -132,7 +132,7 @@ func StatementDelete(w http.ResponseWriter, r *http.Request) {
 			return "", errors.Wrapf(err, "unable to delete statement [%s]", ret.String())
 		}
 		msg := fmt.Sprintf("Statement [%s] deleted", ret.String())
-		return FlashAndRedir(true, msg, "/statement", w, ps)
+		return FlashAndRedir(true, msg, "/statement", ps)
 	})
 }
 
