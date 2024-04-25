@@ -10,10 +10,9 @@ import (
 	"github.com/kyleu/dbaudit/app/util"
 )
 
-const explainPrefix = "explain "
-
 func (s *Service) Explain(ctx context.Context, q string, values []any, _ util.Logger) ([]util.ValueMap, error) {
 	q = strings.TrimSpace(q)
+	explainPrefix := "explain "
 	if !strings.HasPrefix(q, explainPrefix) {
 		q = explainPrefix + q
 	}

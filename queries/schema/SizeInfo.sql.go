@@ -21,50 +21,60 @@ var (
 )
 
 //line queries/schema/SizeInfo.sql:2
-func StreamSizeInfo(qw422016 *qt422016.Writer) {
+func StreamSizeInfo(qw422016 *qt422016.Writer, dbType string) {
 //line queries/schema/SizeInfo.sql:2
 	qw422016.N().S(`
-select
-  'default' as "table_schema",
-  "name" as "table_name",
-  0 as "row_estimate",
-  0 as "total",
-  '' as "total_pretty",
-  0 as "index",
-  '' as "index_pretty",
-  0 as "toast",
-  '' as "toast_pretty",
-  0 as "table",
-  '' as "table_pretty"
-from "sqlite_master"
-where "type" = 'table'
-order by "table_name";
 -- `)
-//line queries/schema/SizeInfo.sql:18
+//line queries/schema/SizeInfo.sql:3
+	switch dbType {
+	// --
+
+//line queries/schema/SizeInfo.sql:4
+	case "sqlserver":
+//line queries/schema/SizeInfo.sql:4
+		qw422016.N().S(`
+select 'TODO';
+-- `)
+//line queries/schema/SizeInfo.sql:6
+	default:
+//line queries/schema/SizeInfo.sql:6
+		qw422016.N().S(`
+select 'unhandled database type [`)
+//line queries/schema/SizeInfo.sql:7
+		qw422016.E().S(dbType)
+//line queries/schema/SizeInfo.sql:7
+		qw422016.N().S(`]';
+-- `)
+//line queries/schema/SizeInfo.sql:8
+	}
+//line queries/schema/SizeInfo.sql:8
+	qw422016.N().S(`
+-- `)
+//line queries/schema/SizeInfo.sql:9
 }
 
-//line queries/schema/SizeInfo.sql:18
-func WriteSizeInfo(qq422016 qtio422016.Writer) {
-//line queries/schema/SizeInfo.sql:18
+//line queries/schema/SizeInfo.sql:9
+func WriteSizeInfo(qq422016 qtio422016.Writer, dbType string) {
+//line queries/schema/SizeInfo.sql:9
 	qw422016 := qt422016.AcquireWriter(qq422016)
-//line queries/schema/SizeInfo.sql:18
-	StreamSizeInfo(qw422016)
-//line queries/schema/SizeInfo.sql:18
+//line queries/schema/SizeInfo.sql:9
+	StreamSizeInfo(qw422016, dbType)
+//line queries/schema/SizeInfo.sql:9
 	qt422016.ReleaseWriter(qw422016)
-//line queries/schema/SizeInfo.sql:18
+//line queries/schema/SizeInfo.sql:9
 }
 
-//line queries/schema/SizeInfo.sql:18
-func SizeInfo() string {
-//line queries/schema/SizeInfo.sql:18
+//line queries/schema/SizeInfo.sql:9
+func SizeInfo(dbType string) string {
+//line queries/schema/SizeInfo.sql:9
 	qb422016 := qt422016.AcquireByteBuffer()
-//line queries/schema/SizeInfo.sql:18
-	WriteSizeInfo(qb422016)
-//line queries/schema/SizeInfo.sql:18
+//line queries/schema/SizeInfo.sql:9
+	WriteSizeInfo(qb422016, dbType)
+//line queries/schema/SizeInfo.sql:9
 	qs422016 := string(qb422016.B)
-//line queries/schema/SizeInfo.sql:18
+//line queries/schema/SizeInfo.sql:9
 	qt422016.ReleaseByteBuffer(qb422016)
-//line queries/schema/SizeInfo.sql:18
+//line queries/schema/SizeInfo.sql:9
 	return qs422016
-//line queries/schema/SizeInfo.sql:18
+//line queries/schema/SizeInfo.sql:9
 }
