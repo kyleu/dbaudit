@@ -23,7 +23,7 @@
       {%- if len(p.Models) > 0 -%}<a href="/db/_random"><button>{%= components.SVGRef("gift", 15, 15, "icon", ps) %}Random</button></a>{%- endif -%}
       <a href="/db/_new"><button>{%= components.SVGRef("plus", 15, 15, "icon", ps) %}New</button></a>
     </div>
-    <h3>{%= components.SVGRefIcon(`database`, ps) %}{%s ps.Title %}</h3>
+    <h3>{%= components.SVGIcon(`database`, ps) %}{%s ps.Title %}</h3>
     <div class="clear"></div>
     {%- if p.SearchQuery != "" -%}
     <hr />

@@ -195,29 +195,29 @@ func Icon(k string, size int, cls string, ps *cutil.PageState) string {
 }
 
 //line views/components/SVG.html:37
-func StreamSVGRefIcon(qw422016 *qt422016.Writer, k string, ps *cutil.PageState) {
+func StreamSVGIcon(qw422016 *qt422016.Writer, k string, ps *cutil.PageState) {
 //line views/components/SVG.html:38
 	StreamSVGRef(qw422016, k, 20, 20, "icon", ps)
 //line views/components/SVG.html:39
 }
 
 //line views/components/SVG.html:39
-func WriteSVGRefIcon(qq422016 qtio422016.Writer, k string, ps *cutil.PageState) {
+func WriteSVGIcon(qq422016 qtio422016.Writer, k string, ps *cutil.PageState) {
 //line views/components/SVG.html:39
 	qw422016 := qt422016.AcquireWriter(qq422016)
 //line views/components/SVG.html:39
-	StreamSVGRefIcon(qw422016, k, ps)
+	StreamSVGIcon(qw422016, k, ps)
 //line views/components/SVG.html:39
 	qt422016.ReleaseWriter(qw422016)
 //line views/components/SVG.html:39
 }
 
 //line views/components/SVG.html:39
-func SVGRefIcon(k string, ps *cutil.PageState) string {
+func SVGIcon(k string, ps *cutil.PageState) string {
 //line views/components/SVG.html:39
 	qb422016 := qt422016.AcquireByteBuffer()
 //line views/components/SVG.html:39
-	WriteSVGRefIcon(qb422016, k, ps)
+	WriteSVGIcon(qb422016, k, ps)
 //line views/components/SVG.html:39
 	qs422016 := string(qb422016.B)
 //line views/components/SVG.html:39

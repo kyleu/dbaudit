@@ -18,7 +18,7 @@
 
 {% func (p *SQLServer) Body(as *app.State, ps *cutil.PageState) %}
   <div class="card">
-    <h3>{%= components.SVGRefIcon(`app`, ps) %}SQL Server Analysis</h3>
+    <h3>{%= components.SVGIcon(`app`, ps) %}SQL Server Analysis</h3>
     <form action="" method="post">
       <table class="mt expanded min-200">
         <tbody>
@@ -32,7 +32,7 @@
   </div>
   {%- if p.Result != nil -%}
   <div class="card">
-    <h3>{%= components.SVGRefIcon(`cog`, ps) %}{%s util.StringPlural(len(p.Result.Events), "Event") %}</h3>
+    <h3>{%= components.SVGIcon(`cog`, ps) %}{%s util.StringPlural(len(p.Result.Events), "Event") %}</h3>
     <div class="mt overflow full-width">
       <table class="expanded">
         <thead>

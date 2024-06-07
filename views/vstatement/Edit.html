@@ -19,11 +19,11 @@
   <div class="card">
     {%- if p.IsNew -%}
     <div class="right"><a href="?prototype=random"><button>Random</button></a></div>
-    <h3>{%= components.SVGRefIcon(`database`, ps) %} New Statement</h3>
+    <h3>{%= components.SVGIcon(`database`, ps) %} New Statement</h3>
     <form action="/statement/_new" class="mt" method="post">
     {%- else -%}
     <div class="right"><a class="link-confirm" href="{%s p.Model.WebPath() %}/delete" data-message="Are you sure you wish to delete statement [{%s p.Model.String() %}]?"><button>Delete</button></a></div>
-    <h3>{%= components.SVGRefIcon(`database`, ps) %} Edit Statement [{%s p.Model.String() %}]</h3>
+    <h3>{%= components.SVGIcon(`database`, ps) %} Edit Statement [{%s p.Model.String() %}]</h3>
     <form action="" method="post">
     {%- endif -%}
       <table class="mt expanded">

@@ -44,7 +44,7 @@ func (p *SQLServer) StreamBody(qw422016 *qt422016.Writer, as *app.State, ps *cut
   <div class="card">
     <h3>`)
 //line views/vparse/SQLServer.html:21
-	components.StreamSVGRefIcon(qw422016, `app`, ps)
+	components.StreamSVGIcon(qw422016, `app`, ps)
 //line views/vparse/SQLServer.html:21
 	qw422016.N().S(`SQL Server Analysis</h3>
     <form action="" method="post">
@@ -77,7 +77,7 @@ func (p *SQLServer) StreamBody(qw422016 *qt422016.Writer, as *app.State, ps *cut
 		qw422016.N().S(`  <div class="card">
     <h3>`)
 //line views/vparse/SQLServer.html:35
-		components.StreamSVGRefIcon(qw422016, `cog`, ps)
+		components.StreamSVGIcon(qw422016, `cog`, ps)
 //line views/vparse/SQLServer.html:35
 		qw422016.E().S(util.StringPlural(len(p.Result.Events), "Event"))
 //line views/vparse/SQLServer.html:35

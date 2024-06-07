@@ -48,7 +48,7 @@ func (p *Edit) StreamBody(qw422016 *qt422016.Writer, as *app.State, ps *cutil.Pa
 		qw422016.N().S(`    <div class="right"><a href="?prototype=random"><button>Random</button></a></div>
     <h3>`)
 //line views/vdb/Edit.html:21
-		components.StreamSVGRefIcon(qw422016, `database`, ps)
+		components.StreamSVGIcon(qw422016, `database`, ps)
 //line views/vdb/Edit.html:21
 		qw422016.N().S(` New Connection</h3>
     <form action="/db/_new" class="mt" method="post">
@@ -67,7 +67,7 @@ func (p *Edit) StreamBody(qw422016 *qt422016.Writer, as *app.State, ps *cutil.Pa
 		qw422016.N().S(`]?"><button>Delete</button></a></div>
     <h3>`)
 //line views/vdb/Edit.html:25
-		components.StreamSVGRefIcon(qw422016, `database`, ps)
+		components.StreamSVGIcon(qw422016, `database`, ps)
 //line views/vdb/Edit.html:25
 		qw422016.N().S(` Edit Connection [`)
 //line views/vdb/Edit.html:25

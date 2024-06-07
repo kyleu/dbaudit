@@ -69,7 +69,7 @@ func (p *List) StreamBody(qw422016 *qt422016.Writer, as *app.State, ps *cutil.Pa
     </div>
     <h3>`)
 //line views/vstatement/List.html:26
-	components.StreamSVGRefIcon(qw422016, `database`, ps)
+	components.StreamSVGIcon(qw422016, `database`, ps)
 //line views/vstatement/List.html:26
 	qw422016.E().S(ps.Title)
 //line views/vstatement/List.html:26

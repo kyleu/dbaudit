@@ -33,7 +33,7 @@ func StreamRenderPlan(qw422016 *qt422016.Writer, s *statement.Statement, as *app
   <div class="card">
     <h3>`)
 //line views/vstatement/Result.html:11
-	components.StreamSVGRefIcon(qw422016, `star`, ps)
+	components.StreamSVGIcon(qw422016, `star`, ps)
 //line views/vstatement/Result.html:11
 	qw422016.N().S(` Query Plan</h3>
     <div class="mt">
@@ -102,7 +102,7 @@ func (p *Result) StreamBody(qw422016 *qt422016.Writer, as *app.State, ps *cutil.
     </div>
     <h3>`)
 //line views/vstatement/Result.html:32
-	components.StreamSVGRefIcon(qw422016, `database`, ps)
+	components.StreamSVGIcon(qw422016, `database`, ps)
 //line views/vstatement/Result.html:32
 	qw422016.N().S(` `)
 //line views/vstatement/Result.html:32

@@ -8,7 +8,7 @@
 
 {% func RenderPlan(s *statement.Statement, as *app.State, ps *cutil.PageState) %}
   <div class="card">
-    <h3>{%= components.SVGRefIcon(`star`, ps) %} Query Plan</h3>
+    <h3>{%= components.SVGIcon(`star`, ps) %} Query Plan</h3>
     <div class="mt">
       <ul>
         <li><a href="{%s s.WebPath() %}/run">Run Statement</a></li>
@@ -29,7 +29,7 @@
       <a href="#modal-statement"><button type="button">JSON</button></a>
       <a href="{%s p.Statement.WebPath() %}"><button>{%= components.SVGRef("edit", 15, 15, "icon", ps) %}View</button></a>
     </div>
-    <h3>{%= components.SVGRefIcon(`database`, ps) %} {%s p.Statement.TitleString() %}</h3>
+    <h3>{%= components.SVGIcon(`database`, ps) %} {%s p.Statement.TitleString() %}</h3>
     {%= components.JSON(p.Result) %}
     <pre>{%s p.Statement.PlainSQL() %}</pre>
   </div>
